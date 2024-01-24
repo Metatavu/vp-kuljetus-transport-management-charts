@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  name: {{ .Release.Name }}-tyk-redis
+  namespace: {{ .Release.Namespace }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-tyk-redis
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-tyk-redis
+    spec:
+      containers:
+      - args:
+        - redis-server 
+        - --appendonly yes
+        image: redis:4.0-alpine
+        imagePullPolicy: IfNotPresent
+        name: {{ .Release.Name }}-tyk-redis
+        ports:
+        - containerPort: 6379
+          name: redis
+          protocol: TCP
