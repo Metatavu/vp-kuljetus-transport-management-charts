@@ -1,0 +1,15 @@
+apiVersion: v2
+name: vp-kuljetus-transport-management
+description: |
+  TODO
+type: application
+version: 0.0.1
+keywords:
+  - transport management system
+dependencies:
+  - name: tyk-redis
+    version: 0.0.1
+    repository: ./charts/tyk-redis
+  - name: tyk-gateway
+    version: 0.0.1
+    repository: ./charts/tyk-gateway
