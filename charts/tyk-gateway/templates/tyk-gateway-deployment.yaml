@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  name: {{ .Release.Name }}-tyk-gateway
+  namespace: {{ .Release.Namespace }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-tyk-gateway
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-tyk-gateway
+    spec:
+      containers:
+      - image: docker.tyk.io/tyk-gateway/tyk-gateway:v5.1.0
+        imagePullPolicy: IfNotPresent
+        name: {{ .Release.Name }}-tyk-gateway
+        env:
+          - name: TYK_GW_STORAGE_TYPE
+            value: redis
+          - name: TYK_GW_STORAGE_HOST
+            value: {{ .Release.Name }}-tyk-redis.{{ .Release.Namespace }}.svc.cluster.local
+          - name: TYK_GW_STORAGE_PORT
+            value: "6379"
+        volumeMounts:
+          - mountPath: /opt/tyk-gateway/apps
+            name: apps
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      volumes:
+        - name: apps
+          configMap:
+            name: {{ .Release.Name }}-tyk-gateway-apps-configmap
+            defaultMode: 420
