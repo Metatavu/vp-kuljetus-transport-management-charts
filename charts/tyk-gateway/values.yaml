@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: docker.tyk.io/tyk-gateway/tyk-gateway
+  pullPolicy: IfNotPresent
+  tag: "v5.1.0"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
