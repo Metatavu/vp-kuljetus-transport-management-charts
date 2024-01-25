@@ -9,5 +9,7 @@ keywords:
 dependencies:
   - name: tyk-redis
     repository: file://charts/tyk-redis
+    version: 0.0.4
   - name: tyk-gateway
     repository: file://charts/tyk-gateway
+    version: 0.0.4
