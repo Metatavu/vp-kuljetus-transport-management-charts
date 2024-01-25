@@ -1,5 +1,24 @@
 apiVersion: v1
 entries:
+  transport-management:
+  - apiVersion: v2
+    created: "2024-01-25T07:36:17.777320321Z"
+    dependencies:
+    - name: tyk-redis
+      repository: file://charts/tyk-redis
+      version: 0.0.4
+    - name: tyk-gateway
+      repository: file://charts/tyk-gateway
+      version: 0.0.4
+    description: 'Helm chart for the transport management system '
+    digest: 1887e3b4c4ab38303c18d95735726e4ab019a9344453d40e9216d2c503c7042f
+    keywords:
+    - transport management system
+    name: transport-management
+    type: application
+    urls:
+    - https://github.com/Metatavu/vp-kuljetus-transport-management-charts/releases/download/transport-management-0.0.4/transport-management-0.0.4.tgz
+    version: 0.0.4
   tyk-gateway:
   - apiVersion: v2
     created: "2024-01-25T06:39:18.365384377Z"
@@ -46,4 +65,4 @@ entries:
     urls:
     - https://github.com/Metatavu/vp-kuljetus-transport-management-charts/releases/download/tyk-redis-0.0.2/tyk-redis-0.0.2.tgz
     version: 0.0.2
-generated: "2024-01-25T06:39:18.553270129Z"
+generated: "2024-01-25T07:36:17.777337162Z"
