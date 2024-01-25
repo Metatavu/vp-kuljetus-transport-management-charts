@@ -24,11 +24,18 @@ jobs:
 
       - name: Install Helm
         uses: azure/setup-helm@v3
-
-      - name: Release Charts
+          
+      - name: Release Dependend Charts
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           mark_as_latest: false
-          
+          chart_dirs: charts/transport-management
+
+      - name: Release Main Chart
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          mark_as_latest: false
