@@ -8,6 +8,6 @@ keywords:
   - transport management system
 dependencies:
   - name: tyk-redis
-    repository: charts/tyk-redis
+    repository: file://charts/tyk-redis
   - name: tyk-gateway
-    repository: charts/tyk-gateway
+    repository: file://charts/tyk-gateway
