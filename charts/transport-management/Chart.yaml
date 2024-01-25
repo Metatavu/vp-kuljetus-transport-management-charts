@@ -13,3 +13,6 @@ dependencies:
   - name: tyk-gateway
     repository: file://charts/tyk-gateway
     version: 0.0.5
+  - name: keycloak
+    repository: file://charts/keycloak
+    version: 0.0.5
