@@ -1,11 +1,13 @@
 apiVersion: v2
 name: vp-kuljetus-transport-management
 description: |
-  Main Helm chart for the transport management system
+  Helm chart for the transport management system
 type: application
 version: 0.0.2
 keywords:
   - transport management system
 dependencies:
-  - name: vp-kuljetus-transport-management
-    repository: ./charts/vp-kuljetus-transport-management
+  - name: tyk-redis
+    repository: charts/tyk-redis
+  - name: tyk-gateway
+    repository: charts/tyk-gateway
