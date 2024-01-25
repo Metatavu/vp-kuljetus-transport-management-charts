@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  tyk-redis:
+  - apiVersion: v2
+    created: "2024-01-25T06:07:49.627372297Z"
+    description: 'Redis deployment for Tyk Gateway '
+    digest: 67a593bba6bc8a412dc1f0271b0afae80d5cc688e053648202da99a76852275a
+    keywords:
+    - transport management system
+    name: tyk-redis
+    type: application
+    urls:
+    - https://github.com/Metatavu/vp-kuljetus-transport-management-charts/releases/download/tyk-redis-0.0.2/tyk-redis-0.0.2.tgz
+    version: 0.0.2
+generated: "2024-01-25T06:07:49.627378228Z"
