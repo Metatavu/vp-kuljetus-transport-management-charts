@@ -31,7 +31,7 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           mark_as_latest: false
-          chart_dirs: charts/transport-management
+          charts_dir: charts/transport-management
 
       - name: Release Main Chart
         uses: helm/chart-releaser-action@v1.6.0
