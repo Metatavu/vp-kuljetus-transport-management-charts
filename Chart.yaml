@@ -3,7 +3,7 @@ name: vp-kuljetus-transport-management
 description: |
   Helm chart for the transport management system
 type: application
-version: 0.0.2
+version: 0.0.3
 keywords:
   - transport management system
 dependencies:
