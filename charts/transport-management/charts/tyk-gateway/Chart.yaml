@@ -1,8 +1,8 @@
 apiVersion: v2
-name: tyk-redis
+name: tyk-gateway
 description: |
-  Redis deployment for Tyk Gateway
+  Tyk API Gateway for VP Kuljetus
 type: application
-version: 0.0.3
+version: 0.0.4
 keywords:
   - transport management system
