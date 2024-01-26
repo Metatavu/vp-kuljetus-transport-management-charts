@@ -35,27 +35,7 @@ spec:
         env:
           - name: JAVA_OPTS_APPEND
             value: -Djgroups.dns.query={{ .Release.Name }}-auth-ping.{{ .Release.Namespace }}.svc.cluster.local
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 240
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 30
-        name: metaform-auth
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 240
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 30
+        name: {{ .Release.Namespace }}-vp-kuljetus-auth
         ports:
         - containerPort: 8080
           name: http
