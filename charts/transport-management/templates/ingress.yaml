@@ -23,7 +23,18 @@ spec:
                 name: {{ .Release.Name }}-tyk-gateway
                 port:
                   number: 8080
+    - host: {{ .Values.auth.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-auth
+                port:
+                  number: 8080
   tls:
     - hosts:
         - {{ .Values.tyk.hostname }}
+        - {{ .Values.auth.hostname }}
       secretName: {{ .Values.ingress.tls.secretName }}
