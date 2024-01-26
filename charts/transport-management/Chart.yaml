@@ -13,3 +13,6 @@ dependencies:
   - name: tyk-gateway
     repository: file://charts/tyk-gateway
     version: 0.0.13
+  - name: auth
+    repository: file://charts/auth
+    version: 0.0.13

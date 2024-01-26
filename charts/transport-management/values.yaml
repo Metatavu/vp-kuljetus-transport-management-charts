@@ -6,3 +6,6 @@ ingress:
 
 tyk:
   hostname: tyk.example.com
+
+auth:
+  hostname: auth.example.com
