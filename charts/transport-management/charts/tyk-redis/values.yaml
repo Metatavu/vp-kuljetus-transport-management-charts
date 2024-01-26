@@ -4,3 +4,11 @@ image:
   repository: redis
   pullPolicy: IfNotPresent
   tag: "4.0-alpine"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

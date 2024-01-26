@@ -1,0 +1,8 @@
+ingress:
+  annotations: {}
+  labels: {}
+  tls:
+    secretName: chart-example-tls
+
+tyk:
+  hostname: tyk.example.com
