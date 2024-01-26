@@ -25,6 +25,10 @@ spec:
       - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
         name: {{ .Release.Name }}-auth
+        command:
+        - /bin/sh
+        - -c
+        - /opt/keycloak/bin/kc.sh start
         envFrom:
           - secretRef:
               name: {{ .Values.authSecretName }}
