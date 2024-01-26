@@ -42,9 +42,6 @@ spec:
           successThreshold: 1
           timeoutSeconds: 30
         name: metaform-auth
-        ports:
-        - containerPort: 8080
-          protocol: TCP
         readinessProbe:
           failureThreshold: 3
           httpGet:
@@ -60,7 +57,7 @@ spec:
           name: http
           protocol: TCP
         - containerPort: 4444
-          name: http
+          name: ping
           protocol: TCP
         resources:
           limits:
