@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Release.Name }}-auth-ping
+  name: {{ .Release.Name }}-auth-ping
+  namespace: {{ .Release.Namespace }}
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 4444
+    protocol: TCP
+    targetPort: 4444
+  selector:
+    app: {{ .Release.Name }}-auth-ping
+  sessionAffinity: None
+  type: ClusterIP

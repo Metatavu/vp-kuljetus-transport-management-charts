@@ -1,8 +1,8 @@
 apiVersion: v2
-name: keycloak
+name: auth
 description: |
   Keycloak for VP Kuljetus
 type: application
-version: 0.0.5
+version: 0.0.13
 keywords:
   - transport management system
