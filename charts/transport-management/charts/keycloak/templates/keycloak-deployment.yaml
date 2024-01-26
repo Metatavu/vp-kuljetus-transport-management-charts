@@ -25,21 +25,9 @@ spec:
       - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
         name: {{ .Release.Name }}-keycloak
-        env:
-          - name: KC_DB_URL
-            value: TODO
-          - name: KC_DB_USERNAME
-            value: TODO
-          - name: KC_PROXY
-            value: edge
-          - name: KC_DB_PASSWORD
-            value: TODO
-          - name: KC_HOSTNAME
-            value: TODO
-          - name: KEYCLOAK_ADMIN
-            value: TODO
-          - name: KEYCLOAK_ADMIN_PASSWORD
-            value: TODO
+        envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-auth-secrets
 
         ports:
         - containerPort: 8080
