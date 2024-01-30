@@ -51,22 +51,22 @@ spec:
             cpu: {{ .Values.resources.requests.cpu }}
             memory: {{ .Values.resources.requests.memory }}
         livenessProbe:
-          failureThreshold: 3
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           httpGet:
             path: /
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 240
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 30
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
         readinessProbe:
-          failureThreshold: 3
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           httpGet:
             path: /
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 240
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 30
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
