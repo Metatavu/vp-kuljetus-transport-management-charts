@@ -20,10 +20,13 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Resolve version from data receiver project
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: vp-kuljetus-vehicle-data-receiver/vp-kuljetus-vehicle-data-receiver
+      - name: Resolve data receiver project docker image sha
+        id: data-receiver-tag
+        run: |
+          echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:latest|jq '.[].Id'|sed s/\"//g|sed s/sha256://) >> $GITHUB_OUTPUT
+      - name: Update data receiver project image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/vp-kuljetus-vehicle-data-receiver/values.yaml &&
+          cat ./charts/vp-kuljetus-vehicle-data-receiver/values.yaml
       - name: Install Helm
         uses: azure/setup-helm@v3
