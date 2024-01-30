@@ -91,4 +91,4 @@ jobs:
             echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&  
             echo "auth:" >> new-values.yaml &&  
             echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&  
-            helm upgrade transport-management . --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
+            helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
