@@ -3,6 +3,6 @@ name: tyk-gateway
 description: |
   Tyk API Gateway for VP Kuljetus
 type: application
-version: 0.0.20
+version: 0.0.21-develop.0
 keywords:
   - transport management system
