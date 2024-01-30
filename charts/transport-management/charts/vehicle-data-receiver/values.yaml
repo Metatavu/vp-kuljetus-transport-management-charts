@@ -1,0 +1,6 @@
+replicaCount: 1
+
+image:
+  repository: 767397931947.dkr.ecr.eu-north-1.amazonaws.com/vp-kuljetus-vehicle-data-receiver
+  pullPolicy: IfNotPresent
+  tag: "b7dbe488"
