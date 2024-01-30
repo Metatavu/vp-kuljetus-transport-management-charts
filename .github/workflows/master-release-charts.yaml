@@ -33,23 +33,24 @@ jobs:
           echo NEW_VERSION=$(echo ${{ steps.resolve_version.outputs.new_tag }}|sed s/transport-management-//) >> $GITHUB_ENV
       - name: Update versions
         run: |
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/Chart.yaml
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-gateway/Chart.yaml
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml
-      - name: Update data receiver project image version
-        run: |
-          sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml
+          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-gateway/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml &&
+          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml          
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
           docker pull ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:latest &&
           echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:latest|jq '.[].Id'|sed s/\"//g|sed s/sha256://) >> $GITHUB_OUTPUT
+      - name: Update data receiver project image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml &&
+          git add ./charts/transport-management/charts/vehicle-data-receiver/values.yaml
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml
           git commit -m "Updated chart versions"
           git checkout develop
           git merge master
