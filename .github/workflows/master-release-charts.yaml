@@ -33,10 +33,10 @@ jobs:
           echo NEW_VERSION=$(echo ${{ steps.resolve_version.outputs.new_tag }}|sed s/transport-management-//) >> $GITHUB_ENV
       - name: Update versions
         run: |
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/Chart.yaml &&
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-gateway/Chart.yaml &&
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml &&
-          sed -i 's/version: .*/version: ${{ steps.version.outputs.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-gateway/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml &&
           git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml          
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
