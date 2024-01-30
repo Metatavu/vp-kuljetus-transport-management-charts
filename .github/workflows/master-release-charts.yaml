@@ -27,7 +27,12 @@ jobs:
           echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:latest|jq '.[].Id'|sed s/\"//g|sed s/sha256://) >> $GITHUB_OUTPUT
       - name: Update data receiver project image version
         run: |
-          sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml  &&
-          cat ./charts/transport-management/charts/vehicle-data-receiver/values.yaml 
+          sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml
       - name: Install Helm
         uses: azure/setup-helm@v3
+      - name: Release Main Chart
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          mark_as_latest: true
