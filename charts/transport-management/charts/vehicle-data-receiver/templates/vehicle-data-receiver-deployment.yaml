@@ -22,8 +22,8 @@ spec:
         app: {{ .Release.Name }}-vehicle-data-receiver
     spec:
       containers:
-      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        imagePullPolicy: IfNotPresent
+      - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}-vehicle-data-receiver
         ports:
         - containerPort: 8080
