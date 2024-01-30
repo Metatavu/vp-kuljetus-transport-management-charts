@@ -43,8 +43,8 @@ jobs:
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
-          docker pull ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:latest &&
-          echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:latest|jq '.[].Id'|sed s/\"//g|sed s/sha256://) >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:develop &&
+          echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:develop|jq '.[].Id'|sed s/\"//g|sed s/sha256://) >> $GITHUB_OUTPUT
       - name: Update data receiver project image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml &&
