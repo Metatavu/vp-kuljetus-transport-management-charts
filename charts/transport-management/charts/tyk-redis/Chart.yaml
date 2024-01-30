@@ -3,6 +3,6 @@ name: tyk-redis
 description: |
   Redis deployment for Tyk Gateway
 type: application
-version: 0.0.19
+version: 0.0.20-develop.0
 keywords:
   - transport management system
