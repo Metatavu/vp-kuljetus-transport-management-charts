@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-vehicle-data-receiver
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.metadata.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   progressDeadlineSeconds: 600
   replicas: {{ .Values.replicaCount }}
@@ -25,6 +29,9 @@ spec:
       - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}-vehicle-data-receiver
+        envFrom:
+          - secretRef:
+            name: {{ .Values.vehicleDataReceiverSecretName }}
         ports:
         - containerPort: 8080
           protocol: TCP

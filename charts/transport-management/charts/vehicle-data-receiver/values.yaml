@@ -4,3 +4,9 @@ image:
   repository: ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver
   pullPolicy: Always
   sha256: 8851149d27c7954e94cee87748562f9dc2452a2157aaf93643a5382098818299
+
+metadata:
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
+
+vehicleDataReceiverSecretName: vehicle-data-receiver-secrets
