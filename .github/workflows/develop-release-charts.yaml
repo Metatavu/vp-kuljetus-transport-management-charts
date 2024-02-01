@@ -5,7 +5,7 @@ on:
     branches:
       - develop
   repository_dispatch:
-    types: 
+    types:
       - update-staging
 
 jobs:
@@ -47,7 +47,7 @@ jobs:
         id: data-receiver-tag
         run: |
           docker pull ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:develop &&
-          echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:develop|jq '.[].Id'|sed s/\"//g|sed s/sha256://) >> $GITHUB_OUTPUT
+          echo DATA_RECIVER_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update data receiver project image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml &&
@@ -71,27 +71,27 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
       - name: Install Helm
-        uses: azure/setup-helm@v3      
+        uses: azure/setup-helm@v3
       - name: Install Chart
         uses: WyriHaximus/github-action-helm3@v3
         with:
           exec: |
-            echo "ingress:" > new-values.yaml &&  
-            echo "  annotations:" >> new-values.yaml &&  
-            echo "    cert-manager.io/cluster-issuer: ${{ secrets.K8S_CLUSTER_ISSUER }}" >> new-values.yaml &&  
-            echo "    ingress.kubernetes.io/force-ssl-redirect: \"true\"" >> new-values.yaml &&  
-            echo "    ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&  
-            echo "    kubernetes.io/ingress.class: nginx" >> new-values.yaml &&  
+            echo "ingress:" > new-values.yaml &&
+            echo "  annotations:" >> new-values.yaml &&
+            echo "    cert-manager.io/cluster-issuer: ${{ secrets.K8S_CLUSTER_ISSUER }}" >> new-values.yaml &&
+            echo "    ingress.kubernetes.io/force-ssl-redirect: \"true\"" >> new-values.yaml &&
+            echo "    ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
+            echo "    kubernetes.io/ingress.class: nginx" >> new-values.yaml &&
             echo "    nginx.ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
             echo "    nginx.org/client-max-body-size: 150m" >> new-values.yaml &&
             echo "    nginx.org/proxy-connect-timeout: 30s" >> new-values.yaml &&
-            echo "    nginx.org/proxy-read-timeout: 30s" >> new-values.yaml &&  
-            echo "  labels:" >> new-values.yaml && 
-            echo "    use-cloudflare-solver: \"true\"" >> new-values.yaml &&  
+            echo "    nginx.org/proxy-read-timeout: 30s" >> new-values.yaml &&
+            echo "  labels:" >> new-values.yaml &&
+            echo "    use-cloudflare-solver: \"true\"" >> new-values.yaml &&
             echo "  tls:" >> new-values.yaml &&
-            echo "    secretName: ${{ secrets.K8S_TLS_SECRET_NAME }}" >> new-values.yaml && 
-            echo "tyk:" >> new-values.yaml &&  
-            echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&  
-            echo "auth:" >> new-values.yaml &&  
-            echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&  
+            echo "    secretName: ${{ secrets.K8S_TLS_SECRET_NAME }}" >> new-values.yaml &&
+            echo "tyk:" >> new-values.yaml &&
+            echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&
+            echo "auth:" >> new-values.yaml &&
+            echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&
             helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
