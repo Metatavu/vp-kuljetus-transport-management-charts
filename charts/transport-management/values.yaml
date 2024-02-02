@@ -9,6 +9,3 @@ tyk:
 
 auth:
   hostname: auth.example.com
-
-vehicleManagementService:
-  hostname: auth.example.com
