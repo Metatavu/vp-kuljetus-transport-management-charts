@@ -43,7 +43,7 @@ jobs:
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-management-service/Chart.yaml &&
-          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml          
+          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
@@ -104,4 +104,8 @@ jobs:
             echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&
             echo "auth:" >> new-values.yaml &&
             echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&
+            echo "vehicle-data-receiver:" >> new-values.yaml &&
+            echo "  storage:" >> new-values.yaml &&
+            echo "    size: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
+            echo "    storageClass: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_CLASS }}" >> new-values.yaml &&
             helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml

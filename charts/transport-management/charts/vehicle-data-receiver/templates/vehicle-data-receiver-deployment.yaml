@@ -51,3 +51,11 @@ spec:
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           successThreshold: {{ .Values.readinessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+        volumeMounts:
+        - mountPath: /opt/telematic-data
+          name: data
+          subPath: /telematic-data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-vehicle-data-receiver-data
