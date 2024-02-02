@@ -35,7 +35,6 @@ spec:
         env:
           - name: JAVA_OPTS_APPEND
             value: -Djgroups.dns.query={{ .Release.Name }}-auth-ping.{{ .Release.Namespace }}.svc.cluster.local
-        name: {{ .Release.Namespace }}-vp-kuljetus-auth
         ports:
         - containerPort: 8080
           name: http
