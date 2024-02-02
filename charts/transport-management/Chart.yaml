@@ -19,3 +19,6 @@ dependencies:
   - name: vehicle-data-receiver
     repository: file://charts/vehicle-data-receiver
     version: 0.0.21-develop.0
+  - name: vehicle-management-service
+    repository: file://charts/vehicle-management-service
+    version: 0.0.21-develop.0

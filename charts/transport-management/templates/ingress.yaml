@@ -33,8 +33,19 @@ spec:
                 name: {{ .Release.Name }}-auth
                 port:
                   number: 8080
+    - host: {{ .Values.vehicleManagementService.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-vehicle-management-service
+                port:
+                  number: 8080
   tls:
     - hosts:
         - {{ .Values.tyk.hostname }}
         - {{ .Values.auth.hostname }}
+        - {{ .Values.vehicleManagementService.hostname }}
       secretName: {{ .Values.ingress.tls.secretName }}

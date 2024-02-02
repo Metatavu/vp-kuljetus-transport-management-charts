@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/metatavu/vp-kuljetus-vehicle-management-service
+  pullPolicy: Always
+  sha256: 8851149d27c7954e94cee87748562f9dc2452a2157aaf93643a5382098818299
+
+metadata:
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
+
+vehicleManagementServiceSecretName: vehicle-management-service-secrets
+
+livenessProbe:
+  failureTreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 30
+
+readinessProbe:
+  failureTreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 30
