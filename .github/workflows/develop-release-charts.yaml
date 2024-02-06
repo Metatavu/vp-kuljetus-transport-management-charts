@@ -42,7 +42,8 @@ jobs:
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-gateway/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml &&
-          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml          
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-management-service/Chart.yaml &&
+          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
@@ -52,6 +53,15 @@ jobs:
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.data-receiver-tag.outputs.DATA_RECIVER_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-data-receiver/values.yaml &&
           git add ./charts/transport-management/charts/vehicle-data-receiver/values.yaml
+      - name: Resolve vehicle management service project docker image sha
+        id: vehicle-management-service-tag
+        run: |
+          docker pull ghcr.io/metatavu/vp-kuljetus-vehicle-management-service-api:develop &&
+          echo VEHICLE_MANAGEMENT_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-vehicle-management-service-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+      - name: Update vehicle management service image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.vehicle-management-service-tag.outputs.VEHICLE_MANAGEMENT_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-management-service/values.yaml &&
+          git add ./charts/transport-management/charts/vehicle-management-service/values.yaml
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -94,4 +104,8 @@ jobs:
             echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&
             echo "auth:" >> new-values.yaml &&
             echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&
+            echo "vehicle-data-receiver:" >> new-values.yaml &&
+            echo "  storage:" >> new-values.yaml &&
+            echo "    size: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
+            echo "    storageClass: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_CLASS }}" >> new-values.yaml &&
             helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
