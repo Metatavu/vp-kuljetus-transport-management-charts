@@ -54,7 +54,7 @@ spec:
         volumeMounts:
         - mountPath: /opt/telematic-data
           name: data
-          subPath: /telematic-data
+          subPath: telematic-data
       volumes:
         - name: data
           persistentVolumeClaim:
