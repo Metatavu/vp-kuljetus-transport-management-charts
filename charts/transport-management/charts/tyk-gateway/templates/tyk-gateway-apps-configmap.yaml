@@ -3,4 +3,13 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-tyk-gateway-apps-configmap
 data:
-  {{- (.Files.Glob "tyk-apps/**.json").AsConfig | nindent 2 }}
+  {{- $root := . }}
+  {{- $releaseName := .Release.Name }}
+  {{- $releaseNamespace := .Release.Namespace }}
+  {{- range $path, $_ := .Files.Glob "tyk-apps/**.json" }}
+    {{- $content := $root.Files.Get $path }}
+    {{ base $path }}: |
+      {{- $vehicleManagementUrl := printf "http://%s-vehicle-management-service.%s.svc.cluster.local" $releaseName $releaseNamespace }}    
+      {{- $workPlanningUrl := printf "http://%s-work-planning-service.%s.svc.cluster.local" $releaseName $releaseNamespace }}    
+      {{- $content | replace "http://vehicle-management" $vehicleManagementUrl | replace "http://work-planning" $workPlanningUrl | nindent 6 }}
+  {{- end }}
