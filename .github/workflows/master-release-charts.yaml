@@ -16,6 +16,10 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+      - name: Checkout latest spec 
+        run: |
+          git submodule set-branch --branch master specs && 
+          git submodule update --init --recursive
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
