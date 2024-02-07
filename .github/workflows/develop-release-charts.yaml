@@ -47,7 +47,8 @@ jobs:
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/tyk-redis/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/vehicle-management-service/Chart.yaml &&
-          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/work-planning-service/Chart.yaml &&
+          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml ./charts/transport-management/charts/work-planning-service/Chart.yaml
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
@@ -66,6 +67,15 @@ jobs:
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.vehicle-management-service-tag.outputs.VEHICLE_MANAGEMENT_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/vehicle-management-service/values.yaml &&
           git add ./charts/transport-management/charts/vehicle-management-service/values.yaml
+      - name: Resolve work planning service project docker image sha
+        id: work-planning-service-tag
+        run: |
+          docker pull ghcr.io/metatavu/vp-kuljetus-work-planning-service-api:develop &&
+          echo WORK_PLANNING_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-work-planning-service-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+      - name: Update work planning service image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.work-planning-service-tag.outputs.WORK_PLANNING_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/work-planning-service/values.yaml &&
+          git add ./charts/transport-management/charts/work-planning-service/values.yaml
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"

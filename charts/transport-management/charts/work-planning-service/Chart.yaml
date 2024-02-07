@@ -1,7 +1,7 @@
 apiVersion: v2
-name: auth
+name: work-planning-service
 description: |
-  Keycloak for VP Kuljetus
+  VP Kuljetus Work Planning Service
 type: application
 version: 0.0.22-develop.0
 keywords:
