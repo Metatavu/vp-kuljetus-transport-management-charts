@@ -1,7 +1,7 @@
 apiVersion: v2
-name: auth
+name: delivery-info-service
 description: |
-  Keycloak for VP Kuljetus
+  VP Kuljetus Delivery Info Service
 type: application
 version: 0.0.22-develop.0
 keywords:
