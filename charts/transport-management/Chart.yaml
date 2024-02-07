@@ -3,25 +3,25 @@ name: transport-management
 description: |
   Helm chart for the transport management system
 type: application
-version: 0.0.22-develop.0
+version: 0.0.21-develop.0
 keywords:
   - transport management system
 dependencies:
   - name: tyk-redis
     repository: file://charts/tyk-redis
-    version: 0.0.22-develop.0
+    version: 0.0.21-develop.0
   - name: tyk-gateway
     repository: file://charts/tyk-gateway
-    version: 0.0.22-develop.0
+    version: 0.0.21-develop.0
   - name: auth
     repository: file://charts/auth
-    version: 0.0.22-develop.0
+    version: 0.0.21-develop.0
   - name: vehicle-data-receiver
     repository: file://charts/vehicle-data-receiver
-    version: 0.0.22-develop.0
+    version: 0.0.21-develop.0
   - name: vehicle-management-service
     repository: file://charts/vehicle-management-service
-    version: 0.0.22-develop.0
+    version: 0.0.21-develop.0
   - name: work-planning-service
     repository: file://charts/work-planning-service
-    version: 0.0.22-develop.0
+    version: 0.0.21-develop.0
