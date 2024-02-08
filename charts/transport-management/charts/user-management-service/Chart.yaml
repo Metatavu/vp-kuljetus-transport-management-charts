@@ -1,7 +1,7 @@
 apiVersion: v2
-name: delivery-info-service
+name: user-management-service
 description: |
-  VP Kuljetus Delivery Info Service
+  VP Kuljetus User Management Service
 type: application
 version: 0.0.24-develop.0
 keywords:
