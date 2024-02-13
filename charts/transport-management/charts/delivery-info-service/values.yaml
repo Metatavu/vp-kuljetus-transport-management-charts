@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/metatavu/vp-kuljetus-delivery-info-service-api
+  pullPolicy: Always
+  sha256: 948591d0b025c31984ee5128e8df5be4a98eb7aae32dd0ac524d348df3318a43
+
+metadata:
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
+
+deliveryInfoServiceSecretName: delivery-info-service-secrets
+
+livenessProbe:
+  failureTreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 30
+
+readinessProbe:
+  failureTreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 30

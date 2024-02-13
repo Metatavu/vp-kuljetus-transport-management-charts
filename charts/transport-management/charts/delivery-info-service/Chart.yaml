@@ -1,7 +1,7 @@
 apiVersion: v2
-name: vehicle-data-receiver
+name: delivery-info-service
 description: |
-  VP Kuljetus Vehicle Data Receiver
+  VP Kuljetus Delivery Info Service
 type: application
 version: 0.0.22
 keywords:
