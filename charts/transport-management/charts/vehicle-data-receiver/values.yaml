@@ -28,3 +28,6 @@ readinessProbe:
 storage:
   size: 20Gi
   storageClass: example
+
+service:
+  awsLoadBalancerConnectionIdleTimeout: 300
