@@ -28,3 +28,6 @@ dependencies:
   - name: delivery-info-service
     repository: file://charts/delivery-info-service
     version: 0.0.22
+  - name: user-management-service
+    repository: file://charts/user-management-service
+    version: 0.0.22
