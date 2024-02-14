@@ -3,6 +3,6 @@ name: user-management-service
 description: |
   VP Kuljetus User Management Service
 type: application
-version: 0.0.24-develop.0
+version: 0.0.21-develop.0
 keywords:
   - transport management system
