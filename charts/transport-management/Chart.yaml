@@ -12,7 +12,7 @@ dependencies:
     version: 0.0.21-develop.0
   - name: tyk-gateway
     repository: file://charts/tyk-gateway
-    version: 0.0.21-develop.0
+    version: 0.0.22
   - name: auth
     repository: file://charts/auth
     version: 0.0.21-develop.0
