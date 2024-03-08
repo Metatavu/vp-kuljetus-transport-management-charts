@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: docker.tyk.io/tyk-gateway/tyk-gateway
+  repository: docker.io/tykio/tyk-gateway
   pullPolicy: IfNotPresent
-  tag: "v5.1.0"
+  tag: "v5.1"
 
 resources:
   limits:
