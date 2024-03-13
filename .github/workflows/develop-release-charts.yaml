@@ -142,4 +142,4 @@ jobs:
             echo "  storage:" >> new-values.yaml &&
             echo "    size: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
             echo "    storageClass: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_CLASS }}" >> new-values.yaml &&
-            helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
+            helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml --force
