@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: quay.io/keycloak/keycloak
+  repository: ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak
   pullPolicy: IfNotPresent
-  tag: "23.0.4"
+  tag: "master"
 
 resources:
   limits:
