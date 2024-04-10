@@ -51,6 +51,15 @@ jobs:
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/delivery-info-service/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/user-management-service/Chart.yaml &&
           git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml ./charts/transport-management/charts/work-planning-service/Chart.yaml ./charts/transport-management/charts/delivery-info-service/Chart.yaml ./charts/transport-management/charts/user-management-service/Chart.yaml
+      - name: Resolve auth docker image sha
+        id: auth-tag
+        run: |
+          docker pull ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak:develop &&
+          echo AUTH_IMAGE_SHA=$(docker inspect ghcr.io/vp-kuljetus-transport-management-keycloak:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+      - name: Update auth image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.auth-tag.outputs.AUTH_IMAGE_SHA }}/g' ./charts/transport-management/charts/auth/values.yaml &&
+          git add ./charts/transport-management/charts/auth/values.yaml
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
