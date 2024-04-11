@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak
   pullPolicy: IfNotPresent
-  sha256: 767c953b27e3d5d377221bdf8545770745e488f949f7efee1a7cea47723e1409
+  sha256: 2a4aa25768bded9ed680039d41cc2b2cf383b9971969496cc9d2b1f97757460d
 
 resources:
   limits:
