@@ -22,7 +22,7 @@ spec:
         app: {{ .Release.Name }}-auth
     spec:
       containers:
-      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+      - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
         imagePullPolicy: Always
         name: {{ .Release.Name }}-auth
         command:
