@@ -55,7 +55,7 @@ jobs:
         id: auth-tag
         run: |
           docker pull ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak:develop &&
-          echo AUTH_IMAGE_SHA=$(docker inspect ghcr.io/vp-kuljetus-transport-management-keycloak:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          echo AUTH_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update auth image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.auth-tag.outputs.AUTH_IMAGE_SHA }}/g' ./charts/transport-management/charts/auth/values.yaml &&
