@@ -46,7 +46,16 @@ jobs:
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/work-planning-service/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/delivery-info-service/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/user-management-service/Chart.yaml &&
-          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/work-planning-service/Chart.yaml ./charts/transport-management/charts/delivery-info-service/Chart.yaml ./charts/transport-management/charts/user-management-service/Chart.yaml
+          git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml ./charts/transport-management/charts/work-planning-service/Chart.yaml ./charts/transport-management/charts/delivery-info-service/Chart.yaml ./charts/transport-management/charts/user-management-service/Chart.yaml
+      - name: Resolve auth docker image sha
+        id: auth-tag
+        run: |
+          docker pull ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak:latest &&
+          echo AUTH_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-transport-management-keycloak:latest|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+      - name: Update auth image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.auth-tag.outputs.AUTH_IMAGE_SHA }}/g' ./charts/transport-management/charts/auth/values.yaml &&
+          git add ./charts/transport-management/charts/auth/values.yaml
       - name: Resolve data receiver project docker image sha
         id: data-receiver-tag
         run: |
@@ -68,8 +77,8 @@ jobs:
       - name: Resolve work planning service project docker image sha
         id: work-planning-service-tag
         run: |
-          docker pull ghcr.io/metatavu/vp-kuljetus-work-planning-service-api:develop &&
-          echo WORK_PLANNING_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-work-planning-service-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/vp-kuljetus-work-planning-service-api:latest &&
+          echo WORK_PLANNING_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-work-planning-service-api:latest|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update work planning service image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.work-planning-service-tag.outputs.WORK_PLANNING_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/work-planning-service/values.yaml &&
@@ -77,8 +86,8 @@ jobs:
       - name: Resolve delivery info service project docker image sha
         id: delivery-info-service-tag
         run: |
-          docker pull ghcr.io/metatavu/vp-kuljetus-delivery-info-service-api:develop &&
-          echo DELIVERY_INFO_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-delivery-info-service-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/vp-kuljetus-delivery-info-service-api:latest &&
+          echo DELIVERY_INFO_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-delivery-info-service-api:latest|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update delivery info service image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.delivery-info-service-tag.outputs.DELIVERY_INFO_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/delivery-info-service/values.yaml &&
@@ -86,8 +95,8 @@ jobs:
       - name: Resolve user management service project docker image sha
         id: user-management-service-tag
         run: |
-          docker pull ghcr.io/metatavu/vp-kuljetus-user-management-service-api:develop &&
-          echo USER_MANAGEMENT_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-user-management-service-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/vp-kuljetus-user-management-service-api:latest &&
+          echo USER_MANAGEMENT_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-user-management-service-api:latest|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update user management service image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.user-management-service-tag.outputs.USER_MANAGEMENT_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/user-management-service/values.yaml &&
