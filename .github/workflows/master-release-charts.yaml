@@ -24,6 +24,7 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
       - name: Build driver card auth provider
         uses: codex-/return-dispatch@v1
         id: driver-card-auth-provider-build
@@ -39,6 +40,7 @@ jobs:
           repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
           owner: Metatavu
           run_id: ${{ steps.driver-card-auth-provider-build.outputs.run_id }}
+
       - name: Calculate new version
         id: resolve_version
         uses: mathieudutour/github-tag-action@v6.1
