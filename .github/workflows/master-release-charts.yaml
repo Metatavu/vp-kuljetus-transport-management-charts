@@ -35,6 +35,7 @@ jobs:
           repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
           owner: Metatavu
           workflow: master-maven-publish.yml
+
       - name: Wait driver card auth provider build
         uses: Codex-/await-remote-run@v1.0.0
         with:
@@ -42,6 +43,24 @@ jobs:
           repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
           owner: Metatavu
           run_id: ${{ steps.driver-card-auth-provider-build.outputs.run_id }}
+
+      - name: Build keycloak
+        uses: codex-/return-dispatch@v1
+        id: keycloak-build
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-transport-management-keycloak
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
+          
+      - name: Wait keycloak build
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repo: vp-kuljetus-transport-management-keycloak
+          owner: Metatavu
+          run_id: ${{ stepskeycloak-build.outputs.run_id }}
 
       - name: Calculate new version
         id: resolve_version
