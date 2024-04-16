@@ -31,6 +31,7 @@ jobs:
         id: driver-card-auth-provider-build
         with:
           token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
           repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
           owner: Metatavu
           workflow: master-maven-publish.yml
