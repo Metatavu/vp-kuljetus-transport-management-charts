@@ -60,7 +60,7 @@ jobs:
           token: ${{ secrets.DISPATCH_PAT }}
           repo: vp-kuljetus-transport-management-keycloak
           owner: Metatavu
-          run_id: ${{ stepskeycloak-build.outputs.run_id }}
+          run_id: ${{ steps.keycloak-build.outputs.run_id }}
 
       - name: Calculate new version
         id: resolve_version
