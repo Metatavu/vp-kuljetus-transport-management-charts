@@ -35,6 +35,7 @@ jobs:
           repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
           owner: Metatavu
           workflow: master-maven-publish.yml
+
       - name: Wait driver card auth provider build
         uses: Codex-/await-remote-run@v1.0.0
         with:
