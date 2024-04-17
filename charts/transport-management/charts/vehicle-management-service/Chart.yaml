@@ -3,6 +3,6 @@ name: vehicle-management-service
 description: |
   VP Kuljetus Vehicle Management Service
 type: application
-version: 0.0.22-develop.3
+version: 0.0.22-develop.4
 keywords:
   - transport management system
