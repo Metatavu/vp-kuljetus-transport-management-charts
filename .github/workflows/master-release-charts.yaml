@@ -43,6 +43,7 @@ jobs:
           repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
           owner: Metatavu
           run_id: ${{ steps.driver-card-auth-provider-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Build keycloak
         uses: codex-/return-dispatch@v1
@@ -111,6 +112,7 @@ jobs:
           repo: vp-kuljetus-transport-management-keycloak
           owner: Metatavu
           run_id: ${{ steps.keycloak-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Wait vehicle data receiver build
         uses: Codex-/await-remote-run@v1.0.0
@@ -119,6 +121,7 @@ jobs:
           repo: vp-kuljetus-vehicle-data-receiver
           owner: Metatavu
           run_id: ${{ steps.vehicle-data-receiver-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Wait vehicle management service build
         uses: Codex-/await-remote-run@v1.0.0
@@ -127,6 +130,7 @@ jobs:
           repo: vp-kuljetus-vehicle-management-service-api
           owner: Metatavu
           run_id: ${{ steps.vehicle-management-service-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Wait work planning service build
         uses: Codex-/await-remote-run@v1.0.0
@@ -135,6 +139,7 @@ jobs:
           repo: vp-kuljetus-work-planning-service-api
           owner: Metatavu
           run_id: ${{ steps.work-planning-service-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Wait delivery info service build
         uses: Codex-/await-remote-run@v1.0.0
@@ -143,6 +148,7 @@ jobs:
           repo: vp-kuljetus-delivery-info-service-api
           owner: Metatavu
           run_id: ${{ steps.delivery-info-service-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Wait user management service build
         uses: Codex-/await-remote-run@v1.0.0
@@ -151,6 +157,7 @@ jobs:
           repo: vp-kuljetus-user-management-service-api
           owner: Metatavu
           run_id: ${{ steps.user-management-service-build.outputs.run_id }}
+          run_timeout_seconds: 300
 
       - name: Calculate new version
         id: resolve_version
