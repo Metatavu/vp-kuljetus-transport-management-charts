@@ -1,11 +1,10 @@
 name: Scheduled Release
-on:
+on: 
   schedule:
-    - cron: '5 * * * *'
+  - cron: '*/5 * * * *'
 
 jobs:
   release:
-    environment: master
     permissions:
       contents: write
     runs-on: ubuntu-latest
