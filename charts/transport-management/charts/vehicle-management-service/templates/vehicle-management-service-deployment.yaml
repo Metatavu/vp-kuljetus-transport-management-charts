@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-vehicle-management-service
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.metadata.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   progressDeadlineSeconds: 600
   replicas: {{ .Values.replicaCount }}
