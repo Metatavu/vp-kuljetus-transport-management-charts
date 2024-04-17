@@ -53,6 +53,56 @@ jobs:
           repo: vp-kuljetus-transport-management-keycloak
           owner: Metatavu
           workflow: master-publish-docker-image.yaml
+
+      - name: Build vehicle data receiver
+        uses: codex-/return-dispatch@v1
+        id: vehicle-data-receiver-build
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-vehicle-data-receiver
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
+
+      - name: Build vehicle management service
+        uses: codex-/return-dispatch@v1
+        id: vehicle-management-service-build
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-vehicle-management-service-api
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
+
+      - name: Build work planning service
+        uses: codex-/return-dispatch@v1
+        id: work-planning-service-build
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-work-planning-service-api
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
+
+      - name: Build delivery info service
+        uses: codex-/return-dispatch@v1
+        id: delivery-info-service-build
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-delivery-info-service-api
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
+
+      - name: Build user management service
+        uses: codex-/return-dispatch@v1
+        id: user-management-service-build
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-user-management-service-api
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
           
       - name: Wait keycloak build
         uses: Codex-/await-remote-run@v1.0.0
@@ -61,6 +111,46 @@ jobs:
           repo: vp-kuljetus-transport-management-keycloak
           owner: Metatavu
           run_id: ${{ steps.keycloak-build.outputs.run_id }}
+
+      - name: Wait vehicle data receiver build
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repo: vp-kuljetus-vehicle-data-receiver
+          owner: Metatavu
+          run_id: ${{ steps.vehicle-data-receiver-build.outputs.run_id }}
+
+      - name: Wait vehicle management service build
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repo: vp-kuljetus-vehicle-management-service-api
+          owner: Metatavu
+          run_id: ${{ steps.vehicle-management-service-build.outputs.run_id }}
+
+      - name: Wait work planning service build
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repo: vp-kuljetus-work-planning-service-api
+          owner: Metatavu
+          run_id: ${{ steps.work-planning-service-build.outputs.run_id }}
+
+      - name: Wait delivery info service build
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repo: vp-kuljetus-delivery-info-service-api
+          owner: Metatavu
+          run_id: ${{ steps.delivery-info-service-build.outputs.run_id }}
+
+      - name: Wait user management service build
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ secrets.DISPATCH_PAT }}
+          repo: vp-kuljetus-user-management-service-api
+          owner: Metatavu
+          run_id: ${{ steps.user-management-service-build.outputs.run_id }}
 
       - name: Calculate new version
         id: resolve_version
