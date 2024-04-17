@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-delivery-info-service-api
   pullPolicy: Always
-  sha256: 96ba819c1971bad34c96232cd86bf0e52a95d95287bfb5485b70c212fd8213db
+  sha256: 7d35354f1cf02809c18c352c0e4e96bf9daefd3e5659cd3a1fffda8712100299
 
 metadata:
   annotations:
