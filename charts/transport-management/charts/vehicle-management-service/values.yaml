@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-vehicle-management-service-api
   pullPolicy: Always
-  sha256: 89ff2fd1fef811b22f49a80f88a6a2041c2bda83a18da1dab18b93080c1500f5
+  sha256: 7373140c5b9ff6378686f4af86db6e5fef1b4ba9d4ebd567b05b8be613e82d0a
 
 metadata:
   annotations:
