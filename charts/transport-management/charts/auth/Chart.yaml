@@ -3,6 +3,6 @@ name: auth
 description: |
   Keycloak for VP Kuljetus
 type: application
-version: 0.0.22-develop.1
+version: 0.0.22-develop.2
 keywords:
   - transport management system
