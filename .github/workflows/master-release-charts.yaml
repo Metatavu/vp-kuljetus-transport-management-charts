@@ -258,11 +258,34 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
+          
       - name: Install Helm
         uses: azure/setup-helm@v3
-      - name: Release Main Chart
-        uses: helm/chart-releaser-action@v1.6.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Install Chart
+        uses: WyriHaximus/github-action-helm3@v3
         with:
-          mark_as_latest: true
+          exec: |
+            echo "ingress:" > new-values.yaml &&
+            echo "  annotations:" >> new-values.yaml &&
+            echo "    cert-manager.io/cluster-issuer: ${{ secrets.K8S_CLUSTER_ISSUER }}" >> new-values.yaml &&
+            echo "    ingress.kubernetes.io/force-ssl-redirect: \"true\"" >> new-values.yaml &&
+            echo "    ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
+            echo "    kubernetes.io/ingress.class: nginx" >> new-values.yaml &&
+            echo "    nginx.ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
+            echo "    nginx.org/client-max-body-size: 150m" >> new-values.yaml &&
+            echo "    nginx.org/proxy-connect-timeout: 30s" >> new-values.yaml &&
+            echo "    nginx.org/proxy-read-timeout: 30s" >> new-values.yaml &&
+            echo "  labels:" >> new-values.yaml &&
+            echo "    use-cloudflare-solver: \"true\"" >> new-values.yaml &&
+            echo "  tls:" >> new-values.yaml &&
+            echo "    secretName: ${{ secrets.K8S_TLS_SECRET_NAME }}" >> new-values.yaml &&
+            echo "tyk:" >> new-values.yaml &&
+            echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&
+            echo "auth:" >> new-values.yaml &&
+            echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&
+            echo "vehicle-data-receiver:" >> new-values.yaml &&
+            echo "  storage:" >> new-values.yaml &&
+            echo "    size: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
+            echo "    storageClass: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_CLASS }}" >> new-values.yaml &&
+            helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
