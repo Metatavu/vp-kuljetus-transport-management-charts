@@ -36,6 +36,13 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
         livenessProbe:
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           httpGet:
