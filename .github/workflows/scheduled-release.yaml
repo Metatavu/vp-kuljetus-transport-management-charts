@@ -1,7 +1,7 @@
 name: Scheduled Release
 on: 
   schedule:
-  - cron: '14 0 * * 4'
+  - cron: '0 15 * * 4'
 
 jobs:
   release:
