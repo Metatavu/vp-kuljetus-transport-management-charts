@@ -8,6 +8,7 @@ on:
     workflows: [Scheduled Release]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   release:
