@@ -49,27 +49,27 @@ spec:
             path: /q/health/started
             port: 8080
             scheme: HTTP
-          failureTreshold: {{ .Values.startupProbe.failureTreshold }}
+          failureThreshold: {{ .Values.startupProbe.failureThreshold }}
           periodSeconds: {{ .Values.startupProbe.periodSeconds }}
           successThreshold: {{ .Values.startupProbe.successThreshold }}
           timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
 
         livenessProbe:
           httpGet:
-            path: /q/health/live
+            path: /q/health
             port: 8080
             scheme: HTTP
-          failureTreshold: {{ .Values.livenessProbe.failureTreshold }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           successThreshold: {{ .Values.livenessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
 
         readinessProbe:
           httpGet:
-            path: /q/health/ready
+            path: /q/health
             port: 8080
             scheme: HTTP
-          failureTreshold: {{ .Values.readinessProbe.failureTreshold }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           successThreshold: {{ .Values.readinessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
