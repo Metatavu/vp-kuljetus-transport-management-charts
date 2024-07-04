@@ -43,23 +43,33 @@ spec:
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
             memory: {{ .Values.resources.requests.memory }}
-        livenessProbe:
-          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+
+        startupProbe:
           httpGet:
-            path: /v1/system/ping
+            path: /q/health/started
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          failureTreshold: {{ .Values.startupProbe.failureTreshold }}
+          periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+          successThreshold: {{ .Values.startupProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+
+        livenessProbe:
+          httpGet:
+            path: /q/health/live
+            port: 8080
+            scheme: HTTP
+          failureTreshold: {{ .Values.livenessProbe.failureTreshold }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           successThreshold: {{ .Values.livenessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+
         readinessProbe:
-          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           httpGet:
-            path: /v1/system/ping
+            path: /q/health/ready
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          failureTreshold: {{ .Values.readinessProbe.failureTreshold }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           successThreshold: {{ .Values.readinessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
