@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-vehicle-management-service-api
@@ -11,19 +11,23 @@ metadata:
 
 vehicleManagementServiceSecretName: vehicle-management-service-secrets
 
-livenessProbe:
-  failureTreshold: 3
-  initialDelaySeconds: 30
+startupProbe:
+  failureTreshold: 30
   periodSeconds: 10
   successThreshold: 1
-  timeoutSeconds: 30
+  timeoutSeconds: 1
+
+livenessProbe:
+  failureTreshold: 3
+  periodSeconds: 5
+  successThreshold: 1
+  timeoutSeconds: 5
 
 readinessProbe:
   failureTreshold: 3
-  initialDelaySeconds: 30
-  periodSeconds: 10
+  periodSeconds: 5
   successThreshold: 1
-  timeoutSeconds: 30
+  timeoutSeconds: 5
 
 resources:
   limits:
