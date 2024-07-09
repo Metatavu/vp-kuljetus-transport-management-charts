@@ -23,7 +23,7 @@ jobs:
       - name: Checkout latest spec 
         run: |
           git submodule set-branch --branch develop specs &&
-          git submodule update --init --recursive
+          git submodule update --init --recursive --remote
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
