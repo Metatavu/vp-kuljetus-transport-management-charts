@@ -3,7 +3,7 @@ replicaCount: 2
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-work-planning-service-api
   pullPolicy: Always
-  sha256: b4e13c1244ed8cadec1af0a70eb20e378a87d5b1a106a44e38116bb9033ce9dc
+  sha256: a1c87cf4ac9d1db1ca53796ad12ec80b995737c6b6354c44f8bf01eb7dda697c
 
 metadata:
   annotations:
