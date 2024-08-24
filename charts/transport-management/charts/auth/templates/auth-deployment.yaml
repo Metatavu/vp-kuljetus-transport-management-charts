@@ -28,7 +28,7 @@ spec:
         command:
         - /bin/sh
         - -c
-        - /opt/keycloak/bin/kc.sh start
+        - /opt/keycloak/bin/kc.sh start --optimized
 
         startupProbe:
           httpGet:
