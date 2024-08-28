@@ -9,3 +9,6 @@ tyk:
 
 auth:
   hostname: auth.example.com
+
+rabbitManagement:
+  hostname: rabbit.example.com

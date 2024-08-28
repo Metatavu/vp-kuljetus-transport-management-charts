@@ -33,8 +33,19 @@ spec:
                 name: {{ .Release.Name }}-auth
                 port:
                   number: 8080
+    - host: {{ .Values.rabbitManagement.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-rabbitmq
+                port:
+                  number: 15672
   tls:
     - hosts:
         - {{ .Values.tyk.hostname }}
         - {{ .Values.auth.hostname }}
+        - {{ .Values.rabbitManagement.hostname }}
       secretName: {{ .Values.ingress.tls.secretName }}
