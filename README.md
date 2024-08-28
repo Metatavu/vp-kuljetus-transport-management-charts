@@ -3,7 +3,7 @@ This repository is part of a VP Kuljetus TMS -project
 
 ### Note: RabbitMQ Cluster Operator is not installed together with vp-kuljetus-transport-management-charts 
 
-nstallation on a VP-Kuljetus cluster
+Installation on a VP-Kuljetus cluster
 
 ### Installing RabbitMQ Cluster Operator in a ```rabbit-system``` namespace:
 
