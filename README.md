@@ -1,4 +1,4 @@
-## Helm Charts for VP Kuljetus TMS
+# Helm Charts for VP Kuljetus TMS
 This repository is part of a VP Kuljetus TMS -project
 
 ### Note: RabbitMQ Cluster Operator is not installed together with vp-kuljetus-transport-management-charts 
