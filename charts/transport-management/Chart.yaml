@@ -31,3 +31,6 @@ dependencies:
   - name: user-management-service
     repository: file://charts/user-management-service
     version: 0.0.22-develop.5
+  - name: rabbitmq
+    repository: file://charts/rabbitmq
+    version: 0.0.22-develop.5
