@@ -40,7 +40,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: rabbit-{{ .Release.Namespace }}
+                name: {{ .Release.Name }}-rabbitmq
                 port:
                   number: 15672
   tls:
