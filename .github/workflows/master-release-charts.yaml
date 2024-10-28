@@ -295,6 +295,8 @@ jobs:
             echo "  hostname: ${{ secrets.TYK_HOSTNAME }}" >> new-values.yaml &&
             echo "auth:" >> new-values.yaml &&
             echo "  hostname: ${{ secrets.AUTH_HOSTNAME }}" >> new-values.yaml &&
+            echo "rabbitManagement:" >> new-values.yaml &&
+            echo "  hostname: ${{ secrets.RABBIT_MANAGEMENT_HOSTNAME }}" >> new-values.yaml &&
             echo "vehicle-data-receiver:" >> new-values.yaml &&
             echo "  storage:" >> new-values.yaml &&
             echo "    size: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
