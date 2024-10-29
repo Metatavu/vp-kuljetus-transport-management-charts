@@ -15,8 +15,5 @@ rabbitManagement:
 
 hcv:
   path: path/to/secrets
-  server: https://hcv.example.com 
-  secretStore:
-    tokenSecretRef:
-      key: token
-      name: example-token
+  server: https://hcv.example.com
+  secretName: example-secret
