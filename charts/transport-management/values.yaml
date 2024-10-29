@@ -12,3 +12,11 @@ auth:
 
 rabbitManagement:
   hostname: rabbit.example.com
+
+hcv:
+  path: path/to/secrets
+  server: https://hcv.example.com 
+  secretStore:
+    tokenSecretRef:
+      key: token
+      name: example-token
