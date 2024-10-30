@@ -7,7 +7,7 @@ image:
 
 metadata:
   annotations:
-    secrets.infisical.com/auto-reload: "true"
+    reloader.stakater.com/auto: "true"
 
 workPlanningServiceSecretName: work-planning-service-secrets
 

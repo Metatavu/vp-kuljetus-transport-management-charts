@@ -155,4 +155,8 @@ jobs:
             echo "  storage:" >> new-values.yaml &&
             echo "    size: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
             echo "    storageClass: ${{ secrets.K8S_DATA_RECEIVER_STORAGE_CLASS }}" >> new-values.yaml &&
+            echo "hcv:" >> new-values.yaml &&
+            echo "  path: ${{ secrets.HCV_PATH }}" >> new-values.yaml &&
+            echo "  server: ${{ secrets.HCV_SERVER }}" >> new-values.yaml &&
+            echo "  secretName: ${{ secrets.HCV_TOKEN_SECRET_NAME }}" >> new-values.yaml &&
             helm upgrade transport-management ./charts/transport-management --namespace ${{ secrets.K8S_NAMESPACE }} -f new-values.yaml
