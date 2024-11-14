@@ -60,7 +60,7 @@ jobs:
         with:
           token: ${{ env.DISPATCH_PAT }}
           ref: master
-          repo: vp-kuljetus-transport-management-driver-card-keycloak-auth-provider
+          repo: vp-tms-keycloak-auth-providers
           owner: Metatavu
           workflow: master-maven-publish.yml
 
