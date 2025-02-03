@@ -33,7 +33,9 @@ spec:
           - secretRef:
               name: {{ .Values.vehicleDataReceiverSecretName }}
         ports:
-        - containerPort: 8080
+        - containerPort: 6500
+          protocol: TCP
+        - containerPort: 2340
           protocol: TCP
         resources:
           limits:
@@ -45,7 +47,7 @@ spec:
         livenessProbe:
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           tcpSocket:
-            port: 8080
+            port: 6500
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           successThreshold: {{ .Values.livenessProbe.successThreshold }}
@@ -53,7 +55,7 @@ spec:
         readinessProbe:
           failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           tcpSocket:
-            port: 8080
+            port: 6500
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           successThreshold: {{ .Values.readinessProbe.successThreshold }}
