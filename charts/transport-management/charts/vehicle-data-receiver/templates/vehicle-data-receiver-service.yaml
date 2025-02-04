@@ -9,9 +9,11 @@ spec:
     app: {{ .Release.Name }}-vehicle-data-receiver
   ports:
     - protocol: TCP
+      name: FMC234
       port: 6500
       targetPort: 6500
     - protocol: TCP
+      name: FMC65
       port: 2340
       targetPort: 2340
   type: LoadBalancer
