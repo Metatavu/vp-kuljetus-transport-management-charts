@@ -3,7 +3,6 @@ replicaCount: 2
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-monitoring-service-api
   pullPolicy: Always
-  sha256: cefef4ea31c99c29adf988c42b966e9829b68b1f85494671d00445147216ea25
 
 metadata:
   annotations:
