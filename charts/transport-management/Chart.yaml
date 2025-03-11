@@ -34,3 +34,6 @@ dependencies:
   - name: rabbitmq
     repository: file://charts/rabbitmq
     version: 0.0.22-develop.5
+  - name: monitoring-service
+    repository: file://charts/monitoring-service
+    version: 0.0.1-develop.1

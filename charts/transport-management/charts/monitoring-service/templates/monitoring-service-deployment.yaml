@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-monitoring-service
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.metadata.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}  
+spec:
+  progressDeadlineSeconds: 600
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-monitoring-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-monitoring-service
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
+        imagePullPolicy: IfNotPresent
+        name: {{ .Release.Name }}-monitoring-service
+        envFrom:
+          - secretRef:
+              name: {{ .Values.deliveryInfoServiceSecretName }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+
+        startupProbe:
+          httpGet:
+            path: /q/health/started
+            port: 8080
+            scheme: HTTP
+          failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+          successThreshold: {{ .Values.startupProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+
+        livenessProbe:
+          httpGet:
+            path: /q/health
+            port: 8080
+            scheme: HTTP
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+
+        readinessProbe:
+          httpGet:
+            path: /q/health
+            port: 8080
+            scheme: HTTP
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
