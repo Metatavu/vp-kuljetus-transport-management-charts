@@ -1,0 +1,8 @@
+apiVersion: v2
+name: monitoring-service
+description: |
+  VP Kuljetus Monitoring Service
+type: application
+version: 0.0.1-develop.1
+keywords:
+  - transport management system
