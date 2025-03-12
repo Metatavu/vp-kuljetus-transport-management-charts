@@ -9,7 +9,7 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
 
-deliveryInfoServiceSecretName: monitoring-service-secrets
+monitoringServiceSecretName: monitoring-service-secrets
 
 startupProbe:
   failureThreshold: 30
