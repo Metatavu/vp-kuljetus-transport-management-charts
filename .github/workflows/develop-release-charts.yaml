@@ -75,6 +75,7 @@ jobs:
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/work-planning-service/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/delivery-info-service/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/user-management-service/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/transport-management/charts/monitoring-service/Chart.yaml &&
           git add ./charts/transport-management/Chart.yaml ./charts/transport-management/charts/auth/Chart.yaml ./charts/transport-management/charts/tyk-gateway/Chart.yaml ./charts/transport-management/charts/tyk-redis/Chart.yaml ./charts/transport-management/charts/rabbitmq/Chart.yaml ./charts/transport-management/charts/vehicle-data-receiver/Chart.yaml ./charts/transport-management/charts/vehicle-management-service/Chart.yaml ./charts/transport-management/charts/work-planning-service/Chart.yaml ./charts/transport-management/charts/delivery-info-service/Chart.yaml ./charts/transport-management/charts/user-management-service/Chart.yaml
       - name: Resolve auth docker image sha
         id: auth-tag
@@ -130,6 +131,15 @@ jobs:
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.user-management-service-tag.outputs.USER_MANAGEMENT_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/user-management-service/values.yaml &&
           git add ./charts/transport-management/charts/user-management-service/values.yaml
+      - name: Resolve monitoring service project docker image sha
+        id: monitoring-service-tag
+        run: |
+          docker pull ghcr.io/metatavu/vp-kuljetus-monitoring-service-api:develop &&
+          echo MONITORING_SERVICE_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/vp-kuljetus-monitoring-service-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+      - name: Update monitoring service image version
+        run: |
+          sed -i 's/sha256: .*/sha256: ${{ steps.monitoring-service-tag.outputs.MONITORING_SERVICE_IMAGE_SHA }}/g' ./charts/transport-management/charts/monitoring-service/values.yaml &&
+          git add ./charts/transport-management/charts/monitoring-service/values.yaml
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
