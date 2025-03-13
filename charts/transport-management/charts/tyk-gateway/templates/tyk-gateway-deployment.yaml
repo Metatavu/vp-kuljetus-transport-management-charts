@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-tyk-gateway
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.metadata.annotations }}
 spec:
   progressDeadlineSeconds: 600
   replicas: {{ .Values.replicaCount }}
