@@ -4,6 +4,9 @@ metadata:
   name: {{ .Release.Name }}-tyk-gateway
   namespace: {{ .Release.Namespace }}
   {{- with .Values.metadata.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   progressDeadlineSeconds: 600
   replicas: {{ .Values.replicaCount }}
@@ -52,4 +55,3 @@ spec:
           configMap:
             name: {{ .Release.Name }}-tyk-gateway-apps-configmap
             defaultMode: 420
-
