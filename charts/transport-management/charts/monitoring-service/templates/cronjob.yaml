@@ -19,7 +19,6 @@ spec:
               - "sh"
               - "-c"
               - |          
-                  # Debugging the constructed URL
-                  echo "Requesting URL: http://{{ .Release.Name }}-monitoring-service.{{ .Release.Namespace }}.svc.cluster.local:8080/v1/cron/resolvemonitorstatuses"
-                  wget -qO- --header "X-CRON-API-KEY: $(VP_MONITORING_CRON_APIKEY)" "http://{{ .Release.Name }}-monitoring-service.{{ .Release.Namespace }}.svc.cluster.local:8080/v1/cron/resolvemonitorstatuses"
+                echo "Resolving monitor statuses"
+                 
           restartPolicy: OnFailure
