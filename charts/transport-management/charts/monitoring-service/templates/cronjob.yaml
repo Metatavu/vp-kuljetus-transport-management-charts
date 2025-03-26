@@ -17,7 +17,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl -s -H "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolvemonitorstatuses | echo
+              curl -s -H "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolveMonitorStatuses | echo
             image: curlimages/curl:latest
             imagePullPolicy: Always
             name: curl-container
