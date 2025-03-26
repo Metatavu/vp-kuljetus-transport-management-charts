@@ -1,7 +1,7 @@
 apiVersion: batch/v2
 kind: CronJob
 metadata:
-  name: cronjobs
+  name: monitoringservice-cronjob
 spec:
   schedule: "* * * * *"
   jobTemplate:
