@@ -20,5 +20,5 @@ spec:
               - -qO-
               - "--header"
               - "X-CRON-API-KEY: $(VP_MONITORING_CRON_APIKEY)"
-              - "{{ .Values.ResolvMonitorStatusesUrl }}{{ .Values.ResolvMonitorStatusesPath }}"
+              - "{{ .Values.MonitorServiceUrl }}{{ .Values.ResolvMonitorStatusesPath }}"
           restartPolicy: OnFailure
