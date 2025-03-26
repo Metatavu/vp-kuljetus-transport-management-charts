@@ -14,7 +14,7 @@ spec:
             imagePullPolicy: IfNotPresent
             envFrom:
               - secretRef:
-                name: {{ .Values.monitoringServiceSecretName }}
+                  name: {{ .Values.monitoringServiceSecretName }}
             command:
               - wget
               - -qO-
