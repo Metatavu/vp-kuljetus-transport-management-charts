@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - feature-83-resolve-monitor-statuses
+      - develop
   repository_dispatch:
     types:
       - update-staging
