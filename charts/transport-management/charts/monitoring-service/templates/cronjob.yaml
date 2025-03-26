@@ -21,6 +21,5 @@ spec:
               - |          
                   # Debugging the constructed URL
                   echo "Requesting URL: {{ .Values.MonitorServiceUrl }}{{ .Values.ResolvMonitorStatusesPath }}"
-                  # Now execute the actual wget command
                   wget -qO- --header "X-CRON-API-KEY: $(VP_MONITORING_CRON_APIKEY)" "{{ .Values.MonitorServiceUrl }}{{ .Values.ResolvMonitorStatusesPath }}"
-          restartPolicy: OnFailure
+          restartPolicy: Never
