@@ -19,6 +19,5 @@ spec:
               - "sh"
               - "-c"
               - |          
-                echo "Resolving monitor statuses"
-                 
+                  echo "http://{{ .Release.Name }}-monitoring-service.{{ .Release.Namespace }}.svc.cluster.local:8080/v1/cron/resolvemonitorstatuses"
           restartPolicy: OnFailure
