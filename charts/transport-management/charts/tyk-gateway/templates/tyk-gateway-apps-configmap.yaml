@@ -14,5 +14,5 @@ data:
       {{- $deliveryInfoUrl := printf "http://%s-delivery-info-service.%s.svc.cluster.local:8080" $releaseName $releaseNamespace }}
       {{- $userManagementUrl := printf "http://%s-user-management-service.%s.svc.cluster.local:8080" $releaseName $releaseNamespace }}
       {{- $monitoringUrl := printf "http://%s-monitoring-service.%s.svc.cluster.local:8080" $releaseName $releaseNamespace }}
-      {{- $content | replace "http://vehicle-management" $vehicleManagementUrl | replace "http://work-planning" $workPlanningUrl | replace "http://delivery-info" $deliveryInfoUrl | replace "http://user-management" $userManagementUrl | nindent 6 }}
+      {{- $content | replace "http://vehicle-management" $vehicleManagementUrl | replace "http://work-planning" $workPlanningUrl | replace "http://delivery-info" $deliveryInfoUrl | replace "http://user-management" $userManagementUrl | replace "http://monitoring" $monitoringUrl | nindent 6 }}
   {{- end }}

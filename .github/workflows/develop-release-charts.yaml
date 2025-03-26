@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - feature-83-resolve-monitor-statuses
+      - develop
   repository_dispatch:
     types:
       - update-staging
@@ -145,11 +145,11 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit --allow-empty -m "Updated chart versions"
-      #- name: Push version changes to develop
-      #  uses: ad-m/github-push-action@v0.6.0
-      #  with:
-      #    github_token: ${{ secrets.GITHUB_TOKEN }}
-      #    branch: develop */
+      - name: Push version changes to develop
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: develop
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
