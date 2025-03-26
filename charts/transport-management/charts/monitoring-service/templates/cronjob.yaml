@@ -10,14 +10,22 @@ spec:
         spec:
           containers:
           - name: resolvemonitorstatuses
-            image: busybox:1.34.1
-            imagePullPolicy: IfNotPresent
             envFrom:
               - secretRef:
                   name: {{ .Values.monitoringServiceSecretName }}
             command:
-              - "sh"
-              - "-c"
-              - |          
-                  echo "http://{{ .Release.Name }}-monitoring-service.{{ .Release.Namespace }}.svc.cluster.local:8080/v1/cron/resolvemonitorstatuses"
+            - /bin/sh
+            - -c
+            - |
+              curl -s -H "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolvemonitorstatuses | echo
+            image: curlimages/curl:latest
+            imagePullPolicy: Always
+            name: curl-container
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
           restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
