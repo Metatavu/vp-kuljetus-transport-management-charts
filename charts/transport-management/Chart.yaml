@@ -37,3 +37,6 @@ dependencies:
   - name: monitoring-service
     repository: file://charts/monitoring-service
     version: 0.0.22-develop.5
+  - name: cronjobs
+    repository: file://charts/cronjobs
+    version: 0.0.22-develop.5
