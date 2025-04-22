@@ -17,7 +17,37 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl -s -H "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolveMonitorStatuses | echo
+              curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolveMonitorStatuses | echo
+            image: curlimages/curl:latest
+            imagePullPolicy: Always
+            name: curl-container
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          - name: triggerpolicies
+            envFrom:
+              - secretRef:
+                  name: {{ .Values.monitoringServiceSecretName }}
+            command:
+            - /bin/sh
+            - -c
+            - |
+              curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/triggerPolicies | echo
+            image: curlimages/curl:latest
+            imagePullPolicy: Always
+            name: curl-container
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          - name: createlostsensorincidents
+            envFrom:
+              - secretRef:
+                  name: {{ .Values.monitoringServiceSecretName }}
+            command:
+            - /bin/sh
+            - -c
+            - |
+              curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/createLostSensorIncidents | echo
             image: curlimages/curl:latest
             imagePullPolicy: Always
             name: curl-container
