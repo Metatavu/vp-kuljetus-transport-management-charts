@@ -3,6 +3,6 @@ name: rabbitmq
 description: |
   RabbitMQ for VP Kuljetus
 type: application
-version: 0.0.22-develop.5
+version: 0.0.22-feature-89-remove-duplicate-events.0
 keywords:
   - transport management system rabbitmq
