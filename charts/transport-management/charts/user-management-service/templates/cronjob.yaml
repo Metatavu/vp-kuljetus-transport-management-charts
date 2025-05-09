@@ -17,7 +17,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --silent --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/endUnresolvedWorkshifts | echo
+              curl --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/endUnresolvedWorkshifts | echo
             image: curlimages/curl:latest
             imagePullPolicy: Always
             name: curl-container
@@ -32,7 +32,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --silent --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/removeEventDuplicates | echo
+              curl --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/removeEventDuplicates | echo
             image: curlimages/curl:latest
             imagePullPolicy: Always
             name: curl-container
