@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feature-89-remove-duplicate-events
   repository_dispatch:
     types:
       - update-staging

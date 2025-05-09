@@ -24,6 +24,21 @@ spec:
             resources: {}
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
+          - name: removeeventduplicates
+            envFrom:
+              - secretRef:
+                  name: {{ .Values.userManagementServiceSecretName }}
+            command:
+            - /bin/sh
+            - -c
+            - |
+              curl --silent --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/removeEventDuplicates | echo
+            image: curlimages/curl:latest
+            imagePullPolicy: Always
+            name: curl-container
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
           dnsPolicy: ClusterFirst
           restartPolicy: OnFailure
           schedulerName: default-scheduler
