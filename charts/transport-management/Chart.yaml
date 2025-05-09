@@ -3,37 +3,37 @@ name: transport-management
 description: |
   Helm chart for the transport management system
 type: application
-version: 0.0.22-feature-89-remove-duplicate-events.0
+version: 0.0.22-develop.5
 keywords:
   - transport management system
 dependencies:
   - name: tyk-redis
     repository: file://charts/tyk-redis
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: tyk-gateway
     repository: file://charts/tyk-gateway
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: auth
     repository: file://charts/auth
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: vehicle-data-receiver
     repository: file://charts/vehicle-data-receiver
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: vehicle-management-service
     repository: file://charts/vehicle-management-service
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: work-planning-service
     repository: file://charts/work-planning-service
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: delivery-info-service
     repository: file://charts/delivery-info-service
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: user-management-service
     repository: file://charts/user-management-service
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: rabbitmq
     repository: file://charts/rabbitmq
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
   - name: monitoring-service
     repository: file://charts/monitoring-service
-    version: 0.0.22-feature-89-remove-duplicate-events.0
+    version: 0.0.22-develop.5
