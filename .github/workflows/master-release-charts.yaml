@@ -132,6 +132,16 @@ jobs:
           repo: vp-kuljetus-user-management-service-api
           owner: Metatavu
           workflow: master-publish-docker-image.yaml
+
+      - name: Build monitoring service
+        uses: codex-/return-dispatch@v1
+        id: monitoring-service-build
+        with:
+          token: ${{ env.DISPATCH_PAT }}
+          ref: master
+          repo: vp-kuljetus-monitoring-service-api
+          owner: Metatavu
+          workflow: master-publish-docker-image.yaml
           
       - name: Wait keycloak build
         uses: Codex-/await-remote-run@v1.0.0
