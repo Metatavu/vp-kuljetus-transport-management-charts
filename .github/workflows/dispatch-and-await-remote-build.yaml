@@ -1,0 +1,37 @@
+on:
+  workflow_call:
+    inputs:
+      repo:
+        required: true
+        type: string
+
+jobs:
+  dispatch-and-await-build:
+    environment: master
+    runs-on: ubuntu-latest
+    steps:
+      - name: Import Secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
+      - name: Dispatch build
+        uses: codex-/return-dispatch@v1
+        id: dispatch
+        with:
+          token: ${{ env.DISPATCH_PAT }}
+          ref: master
+          repo: ${{ inputs.repo }}
+          owner: Metatavu
+          workflow: master-maven-publish.yml
+
+      - name: Await completion
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+          token: ${{ env.DISPATCH_PAT }}
+          repo: ${{ inputs.repo }}
+          owner: Metatavu
+          run_id: ${{ steps.dispatch.outputs.run_id }}
+          run_timeout_seconds: 600

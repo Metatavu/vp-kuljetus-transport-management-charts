@@ -12,253 +12,29 @@ on:
 
 jobs:
   build-auth-providers:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-tms-keycloak-auth-providers
-          owner: Metatavu
-          workflow: master-maven-publish.yml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-tms-keycloak-auth-providers
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
+    uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
+    with:
+      repo: vp-tms-keycloak-auth-providers
 
   build-keycloak:
-    environment: master
-    runs-on: ubuntu-latest
     needs: build-auth-providers
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+    uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
+    with:
+      repo: vp-kuljetus-transport-management-keycloak
 
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-transport-management-keycloak
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-transport-management-keycloak
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-
-  build-vehicle-data-receiver:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-vehicle-data-receiver
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-vehicle-data-receiver
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-
-  build-vehicle-management-service:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-vehicle-management-service-api
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-vehicle-management-service-api
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-
-  build-work-planning-service:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-work-planning-service-api
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-work-planning-service-api
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-
-  build-delivery-info-service:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-delivery-info-service-api
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-delivery-info-service-api
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-
-  build-user-management-service:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-user-management-service-api
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-user-management-service-api
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-
-  build-monitoring-service:
-    environment: master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        id: import
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-
-      - name: Dispatch build
-        uses: codex-/return-dispatch@v1
-        id: dispatch
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          ref: master
-          repo: vp-kuljetus-monitoring-service-api
-          owner: Metatavu
-          workflow: master-publish-docker-image.yaml
-
-      - name: Await completion
-        uses: Codex-/await-remote-run@v1.0.0
-        with:
-          token: ${{ env.DISPATCH_PAT }}
-          repo: vp-kuljetus-monitoring-service-api
-          owner: Metatavu
-          run_id: ${{ steps.dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
+  build-api-services:
+    strategy:
+      matrix:
+        repo:
+          - vp-kuljetus-vehicle-data-receiver
+          - vp-kuljetus-vehicle-management-service-api
+          - vp-kuljetus-work-planning-service-api
+          - vp-kuljetus-delivery-info-service-api
+          - vp-kuljetus-user-management-service-api
+          - vp-kuljetus-monitoring-service-api
+    uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
+    with:
+      repo: ${{ matrix.repo }}
 
   release:
     environment: master
@@ -268,15 +44,9 @@ jobs:
     needs:
       - build-auth-providers
       - build-keycloak
-      - build-vehicle-data-receiver
-      - build-vehicle-management-service
-      - build-work-planning-service
-      - build-delivery-info-service
-      - build-user-management-service
-      - build-monitoring-service
+      - build-api-services
     steps:
       - name: Import Secrets
-        id: import
         uses: hashicorp/vault-action@v2
         with:
           url: ${{ secrets.VAULT_ADDR }}
