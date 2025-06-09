@@ -21,10 +21,10 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
-      - name: Checkout latest spec 
+      - name: Checkout latest spec
         run: |
           git submodule set-branch --branch develop specs &&
-          git submodule update --init --recursive --remote && 
+          git submodule update --init --recursive --remote &&
           git add specs
       - name: Configure Git
         run: |
@@ -164,32 +164,34 @@ jobs:
         uses: WyriHaximus/github-action-helm3@v3
         with:
           exec: |
-            echo "ingress:" > new-values.yaml &&
-            echo "  annotations:" >> new-values.yaml &&
-            echo "    cert-manager.io/cluster-issuer: ${{ env.K8S_CLUSTER_ISSUER }}" >> new-values.yaml &&
-            echo "    ingress.kubernetes.io/force-ssl-redirect: \"true\"" >> new-values.yaml &&
-            echo "    ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
-            echo "    kubernetes.io/ingress.class: nginx" >> new-values.yaml &&
-            echo "    nginx.ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
-            echo "    nginx.org/client-max-body-size: 150m" >> new-values.yaml &&
-            echo "    nginx.org/proxy-connect-timeout: 30s" >> new-values.yaml &&
-            echo "    nginx.org/proxy-read-timeout: 30s" >> new-values.yaml &&
-            echo "  labels:" >> new-values.yaml &&
-            echo "    use-cloudflare-solver: \"true\"" >> new-values.yaml &&
-            echo "  tls:" >> new-values.yaml &&
-            echo "    secretName: ${{ env.K8S_TLS_SECRET_NAME }}" >> new-values.yaml &&
-            echo "tyk:" >> new-values.yaml &&
-            echo "  hostname: ${{ env.TYK_HOSTNAME }}" >> new-values.yaml &&
-            echo "auth:" >> new-values.yaml &&
-            echo "  hostname: ${{ env.AUTH_HOSTNAME }}" >> new-values.yaml &&
-            echo "rabbitManagement:" >> new-values.yaml &&
-            echo "  hostname: ${{ env.RABBIT_MANAGEMENT_HOSTNAME }}" >> new-values.yaml &&
-            echo "vehicle-data-receiver:" >> new-values.yaml &&
-            echo "  storage:" >> new-values.yaml &&
-            echo "    size: ${{ env.K8S_DATA_RECEIVER_STORAGE_SIZE }}" >> new-values.yaml &&
-            echo "    storageClass: ${{ env.K8S_DATA_RECEIVER_STORAGE_CLASS }}" >> new-values.yaml &&
-            echo "hcv:" >> new-values.yaml &&
-            echo "  path: ${{ env.HCV_PATH }}" >> new-values.yaml &&
-            echo "  server: ${{ env.HCV_SERVER }}" >> new-values.yaml &&
-            echo "  secretName: ${{ env.HCV_TOKEN_SECRET_NAME }}" >> new-values.yaml &&
+            cat > new-values.yaml << EOF
+            ingress:
+              annotations:
+                cert-manager.io/cluster-issuer: ${{ env.K8S_CLUSTER_ISSUER }}
+                ingress.kubernetes.io/force-ssl-redirect: "true"
+                ingress.kubernetes.io/proxy-body-size: 150m
+                kubernetes.io/ingress.class: nginx
+                nginx.ingress.kubernetes.io/proxy-body-size: 150m
+                nginx.org/client-max-body-size: 150m
+                nginx.org/proxy-connect-timeout: 30s
+                nginx.org/proxy-read-timeout: 30s
+              labels:
+                use-cloudflare-solver: "true"
+              tls:
+                secretName: ${{ env.K8S_TLS_SECRET_NAME }}
+            tyk:
+              hostname: ${{ env.TYK_HOSTNAME }}
+            auth:
+              hostname: ${{ env.AUTH_HOSTNAME }}
+            rabbitManagement:
+              hostname: ${{ env.RABBIT_MANAGEMENT_HOSTNAME }}
+            vehicle-data-receiver:
+              storage:
+                size: ${{ env.K8S_DATA_RECEIVER_STORAGE_SIZE }}
+                storageClass: ${{ env.K8S_DATA_RECEIVER_STORAGE_CLASS }}
+            hcv:
+              path: ${{ env.HCV_PATH }}
+              server: ${{ env.HCV_SERVER }}
+              secretName: ${{ env.HCV_TOKEN_SECRET_NAME }}
+            EOF
             helm upgrade transport-management ./charts/transport-management --namespace ${{ env.K8S_NAMESPACE }} -f new-values.yaml

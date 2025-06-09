@@ -1,5 +1,5 @@
 name: Scheduled Release
-on: 
+on:
   schedule:
   - cron: '0 15 * * 4'
 
