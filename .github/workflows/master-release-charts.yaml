@@ -15,6 +15,7 @@ jobs:
     uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
     with:
       repo: vp-tms-keycloak-auth-providers
+      workflow: master-maven-publish.yml
     secrets:
       VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
       VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
@@ -25,6 +26,7 @@ jobs:
     uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
     with:
       repo: vp-kuljetus-transport-management-keycloak
+      workflow: master-publish-docker-image.yaml
     secrets:
       VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
       VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
@@ -43,6 +45,7 @@ jobs:
     uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
     with:
       repo: ${{ matrix.repo }}
+      workflow: master-publish-docker-image.yaml
     secrets:
       VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
       VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
