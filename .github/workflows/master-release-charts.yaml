@@ -11,27 +11,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  import-secrets:
+  build-auth-providers:
     environment: master
     runs-on: ubuntu-latest
-    outputs:
-      VAULT_PATH: ${{ steps.import.outputs.VAULT_PATH }}
-      AUTH_HOSTNAME: ${{ steps.import.outputs.AUTH_HOSTNAME }}
-      AWS_ACCESS_KEY_ID: ${{ steps.import.outputs.AWS_ACCESS_KEY_ID }}
-      AWS_REGION: ${{ steps.import.outputs.AWS_REGION }}
-      AWS_SECRET_ACCESS_KEY: ${{ steps.import.outputs.AWS_SECRET_ACCESS_KEY }}
-      DISPATCH_PAT: ${{ steps.import.outputs.DISPATCH_PAT }}
-      EKS_CLUSTER_NAME: ${{ steps.import.outputs.EKS_CLUSTER_NAME }}
-      HCV_PATH: ${{ steps.import.outputs.HCV_PATH }}
-      HCV_SERVER: ${{ steps.import.outputs.HCV_SERVER }}
-      HCV_TOKEN_SECRET_NAME: ${{ steps.import.outputs.HCV_TOKEN_SECRET_NAME }}
-      K8S_CLUSTER_ISSUER: ${{ steps.import.outputs.K8S_CLUSTER_ISSUER }}
-      K8S_DATA_RECEIVER_STORAGE_CLASS: ${{ steps.import.outputs.K8S_DATA_RECEIVER_STORAGE_CLASS }}
-      K8S_DATA_RECEIVER_STORAGE_SIZE: ${{ steps.import.outputs.K8S_DATA_RECEIVER_STORAGE_SIZE }}
-      K8S_NAMESPACE: ${{ steps.import.outputs.K8S_NAMESPACE }}
-      K8S_TLS_SECRET_NAME: ${{ steps.import.outputs.K8S_TLS_SECRET_NAME }}
-      RABBIT_MANAGEMENT_HOSTNAME: ${{ steps.import.outputs.RABBIT_MANAGEMENT_HOSTNAME }}
-      TYK_HOSTNAME: ${{ steps.import.outputs.TYK_HOSTNAME }}
     steps:
       - name: Import Secrets
         id: import
@@ -39,29 +21,8 @@ jobs:
         with:
           url: ${{ secrets.VAULT_ADDR }}
           token: ${{ secrets.VAULT_TOKEN }}
-          secrets: |
-              ${{ secrets.VAULT_PATH }} AUTH_HOSTNAME | AUTH_HOSTNAME ;
-              ${{ secrets.VAULT_PATH }} AWS_ACCESS_KEY_ID | AWS_ACCESS_KEY_ID ;
-              ${{ secrets.VAULT_PATH }} AWS_REGION | AWS_REGION ;
-              ${{ secrets.VAULT_PATH }} AWS_SECRET_ACCESS_KEY | AWS_SECRET_ACCESS_KEY ;
-              ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
-              ${{ secrets.VAULT_PATH }} EKS_CLUSTER_NAME | EKS_CLUSTER_NAME ;
-              ${{ secrets.VAULT_PATH }} HCV_PATH | HCV_PATH ;
-              ${{ secrets.VAULT_PATH }} HCV_SERVER | HCV_SERVER ;
-              ${{ secrets.VAULT_PATH }} HCV_TOKEN_SECRET_NAME | HCV_TOKEN_SECRET_NAME ;
-              ${{ secrets.VAULT_PATH }} K8S_CLUSTER_ISSUER | K8S_CLUSTER_ISSUER ;
-              ${{ secrets.VAULT_PATH }} K8S_DATA_RECEIVER_STORAGE_CLASS | K8S_DATA_RECEIVER_STORAGE_CLASS ;
-              ${{ secrets.VAULT_PATH }} K8S_DATA_RECEIVER_STORAGE_SIZE | K8S_DATA_RECEIVER_STORAGE_SIZE ;
-              ${{ secrets.VAULT_PATH }} K8S_NAMESPACE | K8S_NAMESPACE ;
-              ${{ secrets.VAULT_PATH }} K8S_TLS_SECRET_NAME | K8S_TLS_SECRET_NAME ;
-              ${{ secrets.VAULT_PATH }} RABBIT_MANAGEMENT_HOSTNAME | RABBIT_MANAGEMENT_HOSTNAME ;
-              ${{ secrets.VAULT_PATH }} TYK_HOSTNAME | TYK_HOSTNAME ;
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
 
-  build-auth-providers:
-    environment: master
-    runs-on: ubuntu-latest
-    needs: import-secrets
-    steps:
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -84,10 +45,16 @@ jobs:
   build-keycloak:
     environment: master
     runs-on: ubuntu-latest
-    needs:
-      - import-secrets
-      - build-auth-providers
+    needs: build-auth-providers
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -110,8 +77,15 @@ jobs:
   build-vehicle-data-receiver:
     environment: master
     runs-on: ubuntu-latest
-    needs: import-secrets
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -134,8 +108,15 @@ jobs:
   build-vehicle-management-service:
     environment: master
     runs-on: ubuntu-latest
-    needs: import-secrets
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -158,8 +139,15 @@ jobs:
   build-work-planning-service:
     environment: master
     runs-on: ubuntu-latest
-    needs: import-secrets
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -182,8 +170,15 @@ jobs:
   build-delivery-info-service:
     environment: master
     runs-on: ubuntu-latest
-    needs: import-secrets
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -206,8 +201,15 @@ jobs:
   build-user-management-service:
     environment: master
     runs-on: ubuntu-latest
-    needs: import-secrets
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -230,8 +232,15 @@ jobs:
   build-monitoring-service:
     environment: master
     runs-on: ubuntu-latest
-    needs: import-secrets
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: ${{ secrets.VAULT_PATH }} DISPATCH_PAT | DISPATCH_PAT ;
+
       - name: Dispatch build
         uses: codex-/return-dispatch@v1
         id: dispatch
@@ -257,7 +266,6 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     needs:
-      - import-secrets
       - build-auth-providers
       - build-keycloak
       - build-vehicle-data-receiver
@@ -267,6 +275,29 @@ jobs:
       - build-user-management-service
       - build-monitoring-service
     steps:
+      - name: Import Secrets
+        id: import
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: |
+              ${{ secrets.VAULT_PATH }} AUTH_HOSTNAME | AUTH_HOSTNAME ;
+              ${{ secrets.VAULT_PATH }} AWS_ACCESS_KEY_ID | AWS_ACCESS_KEY_ID ;
+              ${{ secrets.VAULT_PATH }} AWS_REGION | AWS_REGION ;
+              ${{ secrets.VAULT_PATH }} AWS_SECRET_ACCESS_KEY | AWS_SECRET_ACCESS_KEY ;
+              ${{ secrets.VAULT_PATH }} EKS_CLUSTER_NAME | EKS_CLUSTER_NAME ;
+              ${{ secrets.VAULT_PATH }} HCV_PATH | HCV_PATH ;
+              ${{ secrets.VAULT_PATH }} HCV_SERVER | HCV_SERVER ;
+              ${{ secrets.VAULT_PATH }} HCV_TOKEN_SECRET_NAME | HCV_TOKEN_SECRET_NAME ;
+              ${{ secrets.VAULT_PATH }} K8S_CLUSTER_ISSUER | K8S_CLUSTER_ISSUER ;
+              ${{ secrets.VAULT_PATH }} K8S_DATA_RECEIVER_STORAGE_CLASS | K8S_DATA_RECEIVER_STORAGE_CLASS ;
+              ${{ secrets.VAULT_PATH }} K8S_DATA_RECEIVER_STORAGE_SIZE | K8S_DATA_RECEIVER_STORAGE_SIZE ;
+              ${{ secrets.VAULT_PATH }} K8S_NAMESPACE | K8S_NAMESPACE ;
+              ${{ secrets.VAULT_PATH }} K8S_TLS_SECRET_NAME | K8S_TLS_SECRET_NAME ;
+              ${{ secrets.VAULT_PATH }} RABBIT_MANAGEMENT_HOSTNAME | RABBIT_MANAGEMENT_HOSTNAME ;
+              ${{ secrets.VAULT_PATH }} TYK_HOSTNAME | TYK_HOSTNAME ;
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
