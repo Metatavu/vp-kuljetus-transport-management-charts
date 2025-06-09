@@ -15,12 +15,20 @@ jobs:
     uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
     with:
       repo: vp-tms-keycloak-auth-providers
+    secrets:
+      VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+      VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      VAULT_PATH: ${{ secrets.VAULT_PATH }}
 
   build-keycloak:
     needs: build-auth-providers
     uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
     with:
       repo: vp-kuljetus-transport-management-keycloak
+    secrets:
+      VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+      VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      VAULT_PATH: ${{ secrets.VAULT_PATH }}
 
   build-api-services:
     strategy:
@@ -35,6 +43,10 @@ jobs:
     uses: ./.github/workflows/dispatch-and-await-remote-build.yaml
     with:
       repo: ${{ matrix.repo }}
+    secrets:
+      VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+      VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      VAULT_PATH: ${{ secrets.VAULT_PATH }}
 
   release:
     environment: master
