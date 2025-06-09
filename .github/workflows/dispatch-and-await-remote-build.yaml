@@ -4,6 +4,9 @@ on:
       repo:
         required: true
         type: string
+      workflow:
+        required: true
+        type: string
     secrets:
       VAULT_ADDR:
         required: true
@@ -32,7 +35,7 @@ jobs:
           ref: master
           repo: ${{ inputs.repo }}
           owner: Metatavu
-          workflow: master-maven-publish.yml
+          workflow: ${{ inputs.workflow }}
 
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
