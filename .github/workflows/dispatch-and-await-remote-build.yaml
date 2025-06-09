@@ -4,6 +4,13 @@ on:
       repo:
         required: true
         type: string
+    secrets:
+      VAULT_ADDR:
+        required: true
+      VAULT_TOKEN:
+        required: true
+      VAULT_PATH:
+        required: true
 
 jobs:
   dispatch-and-await-build:
