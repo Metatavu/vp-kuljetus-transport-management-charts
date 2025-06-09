@@ -168,7 +168,7 @@ jobs:
             ingress:
               annotations:
                 cert-manager.io/cluster-issuer: ${{ env.K8S_CLUSTER_ISSUER }}
-                ingress.kubernetes.io/force-ssl-redirect: \"true\"
+                ingress.kubernetes.io/force-ssl-redirect: "true"
                 ingress.kubernetes.io/proxy-body-size: 150m
                 kubernetes.io/ingress.class: nginx
                 nginx.ingress.kubernetes.io/proxy-body-size: 150m
@@ -176,7 +176,7 @@ jobs:
                 nginx.org/proxy-connect-timeout: 30s
                 nginx.org/proxy-read-timeout: 30s
               labels:
-                use-cloudflare-solver: \"true\"
+                use-cloudflare-solver: "true"
               tls:
                 secretName: ${{ env.K8S_TLS_SECRET_NAME }}
             tyk:
