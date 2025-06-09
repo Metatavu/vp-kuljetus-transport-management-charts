@@ -27,7 +27,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-tms-keycloak-auth-providers
           owner: Metatavu
@@ -36,7 +36,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-tms-keycloak-auth-providers
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -59,7 +59,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-transport-management-keycloak
           owner: Metatavu
@@ -68,7 +68,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-transport-management-keycloak
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -90,7 +90,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-vehicle-data-receiver
           owner: Metatavu
@@ -99,7 +99,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-vehicle-data-receiver
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -121,7 +121,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-vehicle-management-service-api
           owner: Metatavu
@@ -130,7 +130,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-vehicle-management-service-api
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -152,7 +152,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-work-planning-service-api
           owner: Metatavu
@@ -161,7 +161,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-work-planning-service-api
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -183,7 +183,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-delivery-info-service-api
           owner: Metatavu
@@ -192,7 +192,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-delivery-info-service-api
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -214,7 +214,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-user-management-service-api
           owner: Metatavu
@@ -223,7 +223,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-user-management-service-api
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -245,7 +245,7 @@ jobs:
         uses: codex-/return-dispatch@v1
         id: dispatch
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           ref: master
           repo: vp-kuljetus-monitoring-service-api
           owner: Metatavu
@@ -254,7 +254,7 @@ jobs:
       - name: Await completion
         uses: Codex-/await-remote-run@v1.0.0
         with:
-          token: ${{ needs.import-secrets.outputs.DISPATCH_PAT }}
+          token: ${{ env.DISPATCH_PAT }}
           repo: vp-kuljetus-monitoring-service-api
           owner: Metatavu
           run_id: ${{ steps.dispatch.outputs.run_id }}
@@ -442,12 +442,12 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ needs.import-secrets.outputs.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ needs.import-secrets.outputs.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ needs.import-secrets.outputs.AWS_REGION }}
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Update kube config
-        run: aws eks update-kubeconfig --name ${{ needs.import-secrets.outputs.EKS_CLUSTER_NAME }} --region ${{ needs.import-secrets.outputs.AWS_REGION }}
+        run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -459,7 +459,7 @@ jobs:
             cat > new-values.yaml << EOF
             ingress:
               annotations:
-                cert-manager.io/cluster-issuer: ${{ needs.import-secrets.outputs.K8S_CLUSTER_ISSUER }}
+                cert-manager.io/cluster-issuer: ${{ env.K8S_CLUSTER_ISSUER }}
                 ingress.kubernetes.io/force-ssl-redirect: "true"
                 ingress.kubernetes.io/proxy-body-size: 150m
                 kubernetes.io/ingress.class: nginx
@@ -470,20 +470,20 @@ jobs:
               labels:
                 use-cloudflare-solver: "true"
               tls:
-                secretName: ${{ needs.import-secrets.outputs.K8S_TLS_SECRET_NAME }}
+                secretName: ${{ env.K8S_TLS_SECRET_NAME }}
             tyk:
-              hostname: ${{ needs.import-secrets.outputs.TYK_HOSTNAME }}
+              hostname: ${{ env.TYK_HOSTNAME }}
             auth:
-              hostname: ${{ needs.import-secrets.outputs.AUTH_HOSTNAME }}
+              hostname: ${{ env.AUTH_HOSTNAME }}
             rabbitManagement:
-              hostname: ${{ needs.import-secrets.outputs.RABBIT_MANAGEMENT_HOSTNAME }}
+              hostname: ${{ env.RABBIT_MANAGEMENT_HOSTNAME }}
             vehicle-data-receiver:
               storage:
-                size: ${{ needs.import-secrets.outputs.K8S_DATA_RECEIVER_STORAGE_SIZE }}
-                storageClass: ${{ needs.import-secrets.outputs.K8S_DATA_RECEIVER_STORAGE_CLASS }}
+                size: ${{ env.K8S_DATA_RECEIVER_STORAGE_SIZE }}
+                storageClass: ${{ env.K8S_DATA_RECEIVER_STORAGE_CLASS }}
             hcv:
-              path: ${{ needs.import-secrets.outputs.HCV_PATH }}
-              server: ${{ needs.import-secrets.outputs.HCV_SERVER }}
-              secretName: ${{ needs.import-secrets.outputs.HCV_TOKEN_SECRET_NAME }}
+              path: ${{ env.HCV_PATH }}
+              server: ${{ env.HCV_SERVER }}
+              secretName: ${{ env.HCV_TOKEN_SECRET_NAME }}
             EOF
-            helm upgrade transport-management ./charts/transport-management --namespace ${{ needs.import-secrets.outputs.K8S_NAMESPACE }} -f new-values.yaml
+            helm upgrade transport-management ./charts/transport-management --namespace ${{ env.K8S_NAMESPACE }} -f new-values.yaml
