@@ -3,6 +3,6 @@ name: vehicle-data-receiver
 description: |
   VP Kuljetus Vehicle Data Receiver
 type: application
-version: 0.0.22
+version: 0.0.22-develop.5
 keywords:
   - transport management system
