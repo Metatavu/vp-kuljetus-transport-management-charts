@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-vehicle-data-receiver
   pullPolicy: Always
-  sha256: 166eee08e46f7ae19f73564ad20bcc398ce170c4f9382a3e675fd0d3871d0c14
+  sha256: 3abaa38523dd5473d8374de6393daf15945fd73d65c60a199dd66da9a1d488bf
 metadata:
   annotations:
     reloader.stakater.com/auto: "true"
