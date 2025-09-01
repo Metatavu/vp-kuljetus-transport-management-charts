@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 4
 
 image:
   repository: ghcr.io/metatavu/vp-kuljetus-vehicle-management-service-api
