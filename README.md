@@ -12,4 +12,4 @@ Start with adding a helm chart and installing it:
 helm repo add bitnami https://charts.bitnami.com/bitnami
 kubectl create namespace rabbit-system
 helm install rabbitmq-cluster-operator bitnami/rabbitmq-cluster-operator --namespace rabbit-system
-```
+``` 
