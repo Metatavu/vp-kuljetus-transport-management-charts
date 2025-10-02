@@ -18,7 +18,7 @@ spec:
             - -c
             - |
               curl --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/endUnresolvedWorkshifts | echo
-            image: curlimages/curl:latest
+            image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
             terminationMessagePath: /dev/termination-log
@@ -32,7 +32,7 @@ spec:
             - -c
             - |
               curl --max-time 120 --connect-timeout 120 --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/removeEventDuplicates | echo
-            image: curlimages/curl:latest
+            image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
             terminationMessagePath: /dev/termination-log

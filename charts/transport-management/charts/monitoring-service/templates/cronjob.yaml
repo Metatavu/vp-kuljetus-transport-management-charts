@@ -18,7 +18,7 @@ spec:
             - -c
             - |
               curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolveMonitorStatuses | echo
-            image: curlimages/curl:latest
+            image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
             terminationMessagePath: /dev/termination-log
@@ -32,7 +32,7 @@ spec:
             - -c
             - |
               curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/triggerPolicies | echo
-            image: curlimages/curl:latest
+            image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
             terminationMessagePath: /dev/termination-log
@@ -46,7 +46,7 @@ spec:
             - -c
             - |
               curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/createLostSensorIncidents | echo
-            image: curlimages/curl:latest
+            image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
             terminationMessagePath: /dev/termination-log
