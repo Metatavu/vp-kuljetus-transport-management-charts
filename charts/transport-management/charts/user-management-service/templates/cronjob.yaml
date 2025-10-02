@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: usermanagement-cronjob
+  name: {{ .Release.Name }}-user-management-service-cronjob
 spec:
   schedule: "* * * * *"
   jobTemplate:

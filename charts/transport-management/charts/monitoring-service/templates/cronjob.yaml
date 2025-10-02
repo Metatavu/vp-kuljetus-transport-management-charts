@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: monitoringservice-cronjob
+  name: {{ .Release.Name }}-monitoring-service-cronjob
 spec:
   schedule: "* * * * *"
   jobTemplate:
