@@ -1,3 +1,4 @@
+{{- $serviceHostname := printf "%s-monitoring-service.%s.svc.cluster.local:8080" .Release.Name .Release.Namespace }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -17,7 +18,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/resolveMonitorStatuses | echo
+              if ! curl --silent --show-error --fail --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://{{ $serviceHostname }}/v1/cron/resolveMonitorStatuses; then
+                echo 'Failed to resolve monitor statuses' >&2
+                exit 1
+              fi
             image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
@@ -31,7 +35,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/triggerPolicies | echo
+              if ! curl --silent --show-error --fail --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://{{ $serviceHostname }}/v1/cron/triggerPolicies; then
+                echo 'Failed to trigger policies' >&2
+                exit 1
+              fi
             image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
@@ -45,7 +52,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --silent --show-error --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://transport-management-monitoring-service.staging.svc.cluster.local:8080/v1/cron/createLostSensorIncidents | echo
+              if ! curl --silent --show-error --fail --header "X-CRON-Key: $VP_MONITORING_CRON_APIKEY" http://{{ $serviceHostname }}/v1/cron/createLostSensorIncidents; then
+                echo 'Failed to create lost sensor incidents' >&2
+                exit 1
+              fi
             image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}

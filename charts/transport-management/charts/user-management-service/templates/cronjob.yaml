@@ -1,3 +1,4 @@
+{{- $serviceHostname := printf "%s-user-management-service.%s.svc.cluster.local:8080" .Release.Name .Release.Namespace }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -17,7 +18,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/endUnresolvedWorkshifts | echo
+              if ! curl --silent --show-error --fail --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://{{ $serviceHostname }}/v1/cron/endUnresolvedWorkshifts; then
+                echo 'Failed to end unresolved workshifts' >&2
+                exit 1
+              fi
             image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
@@ -31,7 +35,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              curl --max-time 120 --connect-timeout 120 --show-error --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://transport-management-user-management-service.staging.svc.cluster.local:8080/v1/cron/removeEventDuplicates | echo
+              if ! curl --silent --show-error --fail --max-time 120 --connect-timeout 120 --header "X-CRON-Key: $VP_USERMANAGEMENT_CRON_APIKEY" http://{{ $serviceHostname }}/v1/cron/removeEventDuplicates; then
+                echo 'Failed to remove event duplicates' >&2
+                exit 1
+              fi
             image: curlimages/curl:8.16.0
             imagePullPolicy: Always
             resources: {}
