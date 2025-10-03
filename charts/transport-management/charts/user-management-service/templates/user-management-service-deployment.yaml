@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}-user-management-service
         envFrom:
           - secretRef:
